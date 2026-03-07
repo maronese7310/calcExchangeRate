@@ -1,1 +1,128 @@
-<p>Hello World!</p>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>為替レート</title>
+
+    <!-- base -->
+    <link rel="stylesheet" href="assets/styles/base.css">
+
+    <!-- components -->
+    <link rel="stylesheet" href="assets/styles/components/button.css">
+    <link rel="stylesheet" href="assets/styles/components/currencyItem.css">
+    <link rel="stylesheet" href="assets/styles/components/flag.css">
+    <link rel="stylesheet" href="assets/styles/components/searchBar.css">
+    <link rel="stylesheet" href="assets/styles/components/bottomSheet.css">
+    <link rel="stylesheet" href="assets/styles/components/toast.css">
+
+    <!-- pages -->
+    <link rel="stylesheet" href="assets/styles/pages/start.css">
+    <link rel="stylesheet" href="assets/styles/pages/main.css">
+
+</head>
+
+
+<body>
+
+    <div class="app">
+
+        <!--  Start Screen -->
+        <section id="start-screen" class="screen">
+
+            <div class="start-container">
+
+                <h1 class="start-title">
+                    少々お待ちください
+                </h1>
+
+                <p class="start-description">
+                    為替データの取得中です<br>
+                    取得完了までしばらくお待ちください
+                </p>
+
+                <div class="loading"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Main Screen -->
+
+        <section id="main-screen" class="screen hidden">
+
+            <header class="header">
+
+                <div>
+
+                    <h1 class="page-title">
+                        本日のレート
+                    </h1>
+
+                    <p class="rate-time">
+                        <!--  ---- -->
+                        2026/03/07 10:00(JST)
+                    </p>
+
+                </div>
+
+                <button class="icon-button add-button">
+                    +
+                </button>
+
+            </header>
+
+
+            <main class="main-view">
+
+                <ul id="currency-list">
+
+                    <!-- JSでcurrencyItem生成 -->
+
+                </ul>
+
+            </main>
+
+        </section>
+
+
+        <!-- Toast -->
+
+        <div id="toast" class="toast hidden">
+
+            <span class="toast-message"></span>
+
+        </div>
+
+
+        <!-- Bottom Sheet -->
+
+        <div id="bottom-sheet" class="bottom-sheet hidden">
+
+            <div class="sheet-content">
+
+                <input class="search-bar" placeholder="通貨名またはコード" />
+
+                <ul id="search-currency-list">
+
+                    <!-- currencyItem再利用 -->
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script src="assets/script/main.js"></script>
+
+</body>
+
+</html>

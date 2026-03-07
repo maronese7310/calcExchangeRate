@@ -1,0 +1,46 @@
+.currency-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+.currency-left {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.currency-name {
+    font-size: 30px;
+}
+
+.currency-code {
+    font-size: 20px;
+    color: gray;
+}
+
+.currency-rate {
+    font-size: 30px;
+}
+
+.delete-button {
+    width: 60px;
+    height: 60px;
+
+    background: red;
+
+    border-radius: 15px;
+
+    color: white;
+
+    margin-left: 10px;
+}
+
+.hidden {
+    display: none;
+}
