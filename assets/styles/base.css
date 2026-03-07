@@ -48,8 +48,7 @@ body {
             system-ui,
             sans-serif;
 
-        /*background: #777;*/
-        background: blue;
+        background: #777;
 
         display: flex;
         justify-content: center;
