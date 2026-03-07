@@ -34,7 +34,7 @@ body {
 }
 
 /* PC用 */
-@media(min-width:768px) {
+@media (min-width:768px) {
 
     html,
     body {
@@ -50,9 +50,10 @@ body {
 
         display: flex;
         justify-content: center;
-        min-height: 100vh;
 
+        min-height: 100vh;
         height: 100%;
+
         margin: 0;
         padding: 0;
 
@@ -61,11 +62,8 @@ body {
     }
 
     .app {
-        width: 100%;
-        max-width: 430px;
-
-        height: 100dvh;
-        max-height: 860px;
+        width: 430px;
+        height: 860px;
 
         background: black;
 
@@ -94,15 +92,6 @@ body {
 /* 共通 */
 
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-button {
-    border: none;
-    cursor: pointer;
-}ul {
     list-style: none;
     padding: 0;
     margin: 0;
