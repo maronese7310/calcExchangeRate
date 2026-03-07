@@ -1,0 +1,66 @@
+/* フォント */
+html,
+body {
+    font-family:
+        "Hiragino Kaku Gothic ProN",
+        "Hiragino Sans",
+        "Noto Sans JP",
+        system-ui,
+        sans-serif;
+
+    background: #777;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    margin: 0;
+
+    color: white;
+
+}
+
+
+/* スマホ画面 */
+.app {
+    width: 420px;
+
+    height: 100dvh;
+    max-height: 860px;
+
+    background: black;
+
+    border-radius: 38px;
+
+    overflow: hidden;
+
+    position: relative;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* 画面遷移用 */
+
+.screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* 共通 */
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
