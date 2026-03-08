@@ -1,4 +1,5 @@
 import fetchRate from "../../services/fetchRate.js";
+import formatTimestamp from "../../services/formatter.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
