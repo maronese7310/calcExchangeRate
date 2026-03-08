@@ -9,14 +9,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function initialProcess() {
     // 1) 為替レートの取得
     const rateData = await fetchRate();
-    console.log(rateData);
 
     // 2) データの加工
     rates.fetchDate = formatTimestamp(rateData.timestamp);
-    console.log(rates.fetchDate);
 
     rates.exchangeRate = rateData.rates;
-    console.log(rates.exchangeRate);
+
+    // 3) メイン画面へ遷移
+    const startScreen = document.getElementById("start-screen");
+    const mainScreen = document.getElementById("main-screen");
+
+    startScreen.classList.add("hidden");
+    mainScreen.classList.remove("hidden");
 }
 
 /*
