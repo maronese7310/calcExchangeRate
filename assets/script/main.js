@@ -1,6 +1,6 @@
 import fetchRate from "../../services/fetchRate.js";
 import formatTimestamp from "../../services/formatter.js";
-import { fetchDate, exchangeRate } from "../data/rates.js";
+import { rates } from "../data/rates.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
@@ -12,11 +12,11 @@ async function initialProcess() {
     console.log(rateData);
 
     // 2) データの加工
-    fetchDate = formatTimestamp(rateData.timestamp);
-    console.log(fetchDate);
+    rates.fetchDate = formatTimestamp(rateData.timestamp);
+    console.log(rates.fetchDate);
 
-    exchangeRate = rateData.rates;
-    console.log(exchangeRate);
+    rates.exchangeRate = rateData.rates;
+    console.log(rates.exchangeRate);
 }
 
 /*
