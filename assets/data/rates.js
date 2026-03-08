@@ -1,2 +1,2 @@
-var exchangeRate = {};
-var fetchDate = null;
+export var exchangeRate= {};
+export var fetchDate = null;
