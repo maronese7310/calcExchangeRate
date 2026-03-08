@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initialProcess() {
     // 1) 為替レートの取得
-    const rateData = await fetchRate();
-    console.log(rateData);
+    const rawData = await fetchRate();
+
+    let rateData = JSON.parse(rawData);
 
     // 2) データの加工
     fetchDate = formatTimestamp(rateData[timestamp]);
