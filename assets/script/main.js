@@ -1,5 +1,7 @@
 import fetchRate from "../../services/fetchRate.js";
 import formatTimestamp from "../../services/formatter.js";
+import fetchDate from "../data/rates.js";
+import exchangeRate from "../data/rates.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
