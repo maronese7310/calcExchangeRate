@@ -1,2 +1,4 @@
-export var exchangeRate= {};
-export var fetchDate = null;
+export const rates = {
+    exchangeRate: {},
+    fetchDate: null
+};
