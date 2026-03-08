@@ -18,3 +18,5 @@ function formatTimestamp(timestamp, timeZone = 'Asia/Tokyo') {
 
     return formatted.replace(/\//g, '/');
 };
+
+export default formatTimestamp;
