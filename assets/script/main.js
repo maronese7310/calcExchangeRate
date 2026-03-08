@@ -1,4 +1,4 @@
-import fetchRate from "../services/api/fetchRate.js";
+import fetchRate from "../../services/api/fetchRate.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
