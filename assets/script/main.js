@@ -1,17 +1,11 @@
-document.addEventListener("DOMContentLoaded", () => {
+import fetchRate from "../services/api/fetchRate.js";
 
-    const startScreen = document.getElementById("start-screen")
-    const mainScreen = document.getElementById("main-screen")
+document.addEventListener("DOMContentLoaded", async () => {
+    await initialProcess();
+});
 
-    function showMainScreen() {
-
-        startScreen.classList.add("hidden")
-        mainScreen.classList.remove("hidden")
-
-        console.log("done")
-    }
-
-    /* テスト用 */
-    setTimeout(showMainScreen, 1000)
-
-})
+async function initialProcess() {
+    // 1) 為替レートの取得
+    const rateData = await fetchRate();
+    console.log(rateData);
+}
