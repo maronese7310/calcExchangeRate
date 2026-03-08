@@ -11,11 +11,11 @@ async function initialProcess() {
     const rateData = await fetchRate();
     console.log(rateData);
 
-    //2) データの加工
-    fetchDate = formatTimestamp(rateData.timestamp);
+    // 2) データの加工
+    fetchDate = formatTimestamp(rateData[timestamp]);
     console.log(fetchDate);
 
-    exchangeRate = rateData.rates;
+    exchangeRate = rateData[rates];
     console.log(exchangeRate);
 }
 
