@@ -1,46 +1,57 @@
-.currency-item {
+/* container reset & dark background */
+#currency-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #000;
+    color: #fff;
+}
+
+#currency-list li {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin-bottom: 25px;
-
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #333;
 }
 
-.currency-left {
+.currency-info {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+}
 
-    gap: 15px;
-
+.currency-info .fi {
+    font-size: 2rem;
 }
 
 .currency-name {
-    font-size: 30px;
+    font-size: 1.25rem;
+    color: #fff;
 }
 
 .currency-code {
-    font-size: 20px;
-    color: gray;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ccc;
 }
 
-.currency-rate {
-    font-size: 30px;
+/* editable amount to right */
+#currency-list li .amount {
+    width: 80px;
+    font-size: 1.25rem;
+    text-align: right;
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    color: #fff;
+    outline: none;
 }
 
-.delete-button {
-    width: 60px;
-    height: 60px;
-
-    background: red;
-
-    border-radius: 15px;
-
-    color: white;
-
-    margin-left: 10px;
-}
-
-.hidden {
-    display: none;
+#currency-list li .amount::-webkit-inner-spin-button,
+#currency-list li .amount::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
