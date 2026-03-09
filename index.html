@@ -15,8 +15,6 @@
 
     <!-- components -->
     <link rel="stylesheet" href="assets/styles/components/button.css">
-    <link rel="stylesheet" href="assets/styles/components/currencyItem.css">
-    <link rel="stylesheet" href="assets/styles/components/flag.css">
     <link rel="stylesheet" href="assets/styles/components/searchBar.css">
     <link rel="stylesheet" href="assets/styles/components/bottomSheet.css">
     <link rel="stylesheet" href="assets/styles/components/toast.css">
@@ -27,6 +25,7 @@
 
     <!-- scripts -->
     <script type="module" src="assets/script/main.js"></script>
+    <script type="module" src="services/createCurrencyList.js"></script>
 
 </head>
 
@@ -86,7 +85,9 @@
 
                 <ul id="currency-list">
 
-                    <!-- JSでcurrencyItem生成 -->
+                    <script>
+                        createCurrencyList();
+                    </script>
 
                 </ul>
 
