@@ -11,7 +11,7 @@ async function createCurrencyList() {
         const className = currencyData[code]?.flag || '';
         const li = document.createElement('li');
         li.innerHTML = `
-            <span class="fi fi-${className}"></span>
+            <span class="fi fi-${className}" flag></span>
             <span class="currency-code">${code}</span>
         `;
         currencyListElement.appendChild(li);
