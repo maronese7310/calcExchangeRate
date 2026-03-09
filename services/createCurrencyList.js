@@ -13,8 +13,8 @@ async function createCurrencyList() {
 
         const li = document.createElement('li');
         li.innerHTML = `
+            <span class="fi fi-${className}"></span>
             <div class="currency-info">
-                <span class="fi fi-${className}"></span>
                 <span class="currency-name">${name}</span>
                 <span class="currency-code">${code}</span>
             </div>
