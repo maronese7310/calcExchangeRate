@@ -1,160 +1,638 @@
 {
-  "AED": {"name":"UAEディルハム","flag":"ae"},
-  "AFN": {"name":"アフガニスタン・アフガニ","flag":"af"},
-  "ALL": {"name":"アルバニア・レク","flag":"al"},
-  "AMD": {"name":"アルメニア・ドラム","flag":"am"},
-  "ANG": {"name":"オランダ領アンティル・ギルダー","flag":"cw"},
-  "AOA": {"name":"アンゴラ・クワンザ","flag":"ao"},
-  "ARS": {"name":"アルゼンチン・ペソ","flag":"ar"},
-  "AUD": {"name":"オーストラリア・ドル","flag":"au"},
-  "AWG": {"name":"アルバ・フロリン","flag":"aw"},
-  "AZN": {"name":"アゼルバイジャン・マナト","flag":"az"},
-  "BAM": {"name":"ボスニア・ヘルツェゴビナ・マルク","flag":"ba"},
-  "BBD": {"name":"バルバドス・ドル","flag":"bb"},
-  "BDT": {"name":"バングラデシュ・タカ","flag":"bd"},
-  "BGN": {"name":"ブルガリア・レフ","flag":"bg"},
-  "BHD": {"name":"バーレーン・ディナール","flag":"bh"},
-  "BIF": {"name":"ブルンジ・フラン","flag":"bi"},
-  "BMD": {"name":"バミューダ・ドル","flag":"bm"},
-  "BND": {"name":"ブルネイ・ドル","flag":"bn"},
-  "BOB": {"name":"ボリビア・ボリビアーノ","flag":"bo"},
-  "BRL": {"name":"ブラジル・レアル","flag":"br"},
-  "BSD": {"name":"バハマ・ドル","flag":"bs"},
-  "BTN": {"name":"ブータン・ニュルタム","flag":"bt"},
-  "BWP": {"name":"ボツワナ・プラ","flag":"bw"},
-  "BYN": {"name":"ベラルーシ・ルーブル","flag":"by"},
-  "BZD": {"name":"ベリーズ・ドル","flag":"bz"},
-  "CAD": {"name":"カナダ・ドル","flag":"ca"},
-  "CDF": {"name":"コンゴ・フラン","flag":"cd"},
-  "CHF": {"name":"スイス・フラン","flag":"ch"},
-  "CLP": {"name":"チリ・ペソ","flag":"cl"},
-  "CNH": {"name":"人民元（オフショア）","flag":"cn"},
-  "CNY": {"name":"人民元","flag":"cn"},
-  "COP": {"name":"コロンビア・ペソ","flag":"co"},
-  "CRC": {"name":"コスタリカ・コロン","flag":"cr"},
-  "CUP": {"name":"キューバ・ペソ","flag":"cu"},
-  "CVE": {"name":"カーボベルデ・エスクード","flag":"cv"},
-  "CZK": {"name":"チェコ・コルナ","flag":"cz"},
-  "DJF": {"name":"ジブチ・フラン","flag":"dj"},
-  "DKK": {"name":"デンマーク・クローネ","flag":"dk"},
-  "DOP": {"name":"ドミニカ共和国ペソ","flag":"do"},
-  "DZD": {"name":"アルジェリア・ディナール","flag":"dz"},
-  "EGP": {"name":"エジプト・ポンド","flag":"eg"},
-  "ERN": {"name":"エリトリア・ナクファ","flag":"er"},
-  "ETB": {"name":"エチオピア・ブル","flag":"et"},
-  "EUR": {"name":"ユーロ","flag":"eu"},
-  "FJD": {"name":"フィジー・ドル","flag":"fj"},
-  "FKP": {"name":"フォークランド諸島ポンド","flag":"fk"},
-  "GBP": {"name":"英ポンド","flag":"gb"},
-  "GEL": {"name":"ジョージア・ラリ","flag":"ge"},
-  "GGP": {"name":"ガーンジー・ポンド","flag":"gg"},
-  "GHS": {"name":"ガーナ・セディ","flag":"gh"},
-  "GIP": {"name":"ジブラルタル・ポンド","flag":"gi"},
-  "GMD": {"name":"ガンビア・ダラシ","flag":"gm"},
-  "GNF": {"name":"ギニア・フラン","flag":"gn"},
-  "GTQ": {"name":"グアテマラ・ケツァル","flag":"gt"},
-  "GYD": {"name":"ガイアナ・ドル","flag":"gy"},
-  "HKD": {"name":"香港ドル","flag":"hk"},
-  "HNL": {"name":"ホンジュラス・レンピラ","flag":"hn"},
-  "HTG": {"name":"ハイチ・グールド","flag":"ht"},
-  "HUF": {"name":"ハンガリー・フォリント","flag":"hu"},
-  "IDR": {"name":"インドネシア・ルピア","flag":"id"},
-  "ILS": {"name":"イスラエル・新シェケル","flag":"il"},
-  "IMP": {"name":"マン島ポンド","flag":"im"},
-  "INR": {"name":"インド・ルピー","flag":"in"},
-  "IQD": {"name":"イラク・ディナール","flag":"iq"},
-  "IRR": {"name":"イラン・リアル","flag":"ir"},
-  "ISK": {"name":"アイスランド・クローナ","flag":"is"},
-  "JEP": {"name":"ジャージー・ポンド","flag":"je"},
-  "JMD": {"name":"ジャマイカ・ドル","flag":"jm"},
-  "JOD": {"name":"ヨルダン・ディナール","flag":"jo"},
-  "KES": {"name":"ケニア・シリング","flag":"ke"},
-  "KGS": {"name":"キルギス・ソム","flag":"kg"},
-  "KHR": {"name":"カンボジア・リエル","flag":"kh"},
-  "KMF": {"name":"コモロ・フラン","flag":"km"},
-  "KPW": {"name":"北朝鮮ウォン","flag":"kp"},
-  "KRW": {"name":"韓国ウォン","flag":"kr"},
-  "KWD": {"name":"クウェート・ディナール","flag":"kw"},
-  "KYD": {"name":"ケイマン諸島ドル","flag":"ky"},
-  "KZT": {"name":"カザフスタン・テンゲ","flag":"kz"},
-  "LAK": {"name":"ラオス・キープ","flag":"la"},
-  "LBP": {"name":"レバノン・ポンド","flag":"lb"},
-  "LKR": {"name":"スリランカ・ルピー","flag":"lk"},
-  "LRD": {"name":"リベリア・ドル","flag":"lr"},
-  "LSL": {"name":"レソト・ロティ","flag":"ls"},
-  "LYD": {"name":"リビア・ディナール","flag":"ly"},
-  "MAD": {"name":"モロッコ・ディルハム","flag":"ma"},
-  "MDL": {"name":"モルドバ・レウ","flag":"md"},
-  "MGA": {"name":"マダガスカル・アリアリ","flag":"mg"},
-  "MKD": {"name":"北マケドニア・デナル","flag":"mk"},
-  "MMK": {"name":"ミャンマー・チャット","flag":"mm"},
-  "MNT": {"name":"モンゴル・トゥグルグ","flag":"mn"},
-  "MOP": {"name":"マカオ・パタカ","flag":"mo"},
-  "MRU": {"name":"モーリタニア・ウギア","flag":"mr"},
-  "MUR": {"name":"モーリシャス・ルピー","flag":"mu"},
-  "MVR": {"name":"モルディブ・ルフィア","flag":"mv"},
-  "MWK": {"name":"マラウイ・クワチャ","flag":"mw"},
-  "MXN": {"name":"メキシコ・ペソ","flag":"mx"},
-  "MYR": {"name":"マレーシア・リンギット","flag":"my"},
-  "MZN": {"name":"モザンビーク・メティカル","flag":"mz"},
-  "NAD": {"name":"ナミビア・ドル","flag":"na"},
-  "NGN": {"name":"ナイジェリア・ナイラ","flag":"ng"},
-  "NIO": {"name":"ニカラグア・コルドバ","flag":"ni"},
-  "NOK": {"name":"ノルウェー・クローネ","flag":"no"},
-  "NPR": {"name":"ネパール・ルピー","flag":"np"},
-  "NZD": {"name":"ニュージーランド・ドル","flag":"nz"},
-  "OMR": {"name":"オマーン・リアル","flag":"om"},
-  "PAB": {"name":"パナマ・バルボア","flag":"pa"},
-  "PEN": {"name":"ペルー・ソル","flag":"pe"},
-  "PGK": {"name":"パプアニューギニア・キナ","flag":"pg"},
-  "PHP": {"name":"フィリピン・ペソ","flag":"ph"},
-  "PKR": {"name":"パキスタン・ルピー","flag":"pk"},
-  "PLN": {"name":"ポーランド・ズウォティ","flag":"pl"},
-  "PYG": {"name":"パラグアイ・グアラニー","flag":"py"},
-  "QAR": {"name":"カタール・リアル","flag":"qa"},
-  "RON": {"name":"ルーマニア・レウ","flag":"ro"},
-  "RSD": {"name":"セルビア・ディナール","flag":"rs"},
-  "RUB": {"name":"ロシア・ルーブル","flag":"ru"},
-  "RWF": {"name":"ルワンダ・フラン","flag":"rw"},
-  "SAR": {"name":"サウジアラビア・リヤル","flag":"sa"},
-  "SBD": {"name":"ソロモン諸島ドル","flag":"sb"},
-  "SCR": {"name":"セーシェル・ルピー","flag":"sc"},
-  "SDG": {"name":"スーダン・ポンド","flag":"sd"},
-  "SEK": {"name":"スウェーデン・クローナ","flag":"se"},
-  "SGD": {"name":"シンガポール・ドル","flag":"sg"},
-  "SHP": {"name":"セントヘレナ・ポンド","flag":"sh"},
-  "SLL": {"name":"シエラレオネ・レオン","flag":"sl"},
-  "SOS": {"name":"ソマリア・シリング","flag":"so"},
-  "SRD": {"name":"スリナム・ドル","flag":"sr"},
-  "SSP": {"name":"南スーダン・ポンド","flag":"ss"},
-  "STN": {"name":"サントメ・プリンシペ・ドブラ","flag":"st"},
-  "SVC": {"name":"エルサルバドル・コロン","flag":"sv"},
-  "SYP": {"name":"シリア・ポンド","flag":"sy"},
-  "SZL": {"name":"エスワティニ・リランゲニ","flag":"sz"},
-  "THB": {"name":"タイ・バーツ","flag":"th"},
-  "TJS": {"name":"タジキスタン・ソモニ","flag":"tj"},
-  "TMT": {"name":"トルクメニスタン・マナト","flag":"tm"},
-  "TND": {"name":"チュニジア・ディナール","flag":"tn"},
-  "TOP": {"name":"トンガ・パアンガ","flag":"to"},
-  "TRY": {"name":"トルコ・リラ","flag":"tr"},
-  "TTD": {"name":"トリニダード・トバゴ・ドル","flag":"tt"},
-  "TWD": {"name":"台湾ドル","flag":"tw"},
-  "TZS": {"name":"タンザニア・シリング","flag":"tz"},
-  "UAH": {"name":"ウクライナ・フリヴニャ","flag":"ua"},
-  "UGX": {"name":"ウガンダ・シリング","flag":"ug"},
-  "USD": {"name":"米ドル","flag":"us"},
-  "UYU": {"name":"ウルグアイ・ペソ","flag":"uy"},
-  "UZS": {"name":"ウズベキスタン・スム","flag":"uz"},
-  "VES": {"name":"ベネズエラ・ボリバル","flag":"ve"},
-  "VND": {"name":"ベトナム・ドン","flag":"vn"},
-  "VUV": {"name":"バヌアツ・バツ","flag":"vu"},
-  "WST": {"name":"サモア・タラ","flag":"ws"},
-  "XAF": {"name":"CFAフラン（BEAC）","flag":"cm"},
-  "XCD": {"name":"東カリブ・ドル","flag":"ag"},
-  "XOF": {"name":"CFAフラン（BCEAO）","flag":"sn"},
-  "XPF": {"name":"CFPフラン","flag":"pf"},
-  "YER": {"name":"イエメン・リアル","flag":"ye"},
-  "ZAR": {"name":"南アフリカ・ランド","flag":"za"},
-  "ZMW": {"name":"ザンビア・クワチャ","flag":"zm"},
-  "ZWL": {"name":"ジンバブエ・ドル","flag":"zw"}
+  "AED": {
+    "name": "UAEディルハム",
+    "flag": "ae"
+  },
+  "AFN": {
+    "name": "アフガニスタン・アフガニ",
+    "flag": "af"
+  },
+  "ALL": {
+    "name": "アルバニア・レク",
+    "flag": "al"
+  },
+  "AMD": {
+    "name": "アルメニア・ドラム",
+    "flag": "am"
+  },
+  "ANG": {
+    "name": "オランダ領アンティル・ギルダー",
+    "flag": "cw"
+  },
+  "AOA": {
+    "name": "アンゴラ・クワンザ",
+    "flag": "ao"
+  },
+  "ARS": {
+    "name": "アルゼンチン・ペソ",
+    "flag": "ar"
+  },
+  "AUD": {
+    "name": "オーストラリア・ドル",
+    "flag": "au"
+  },
+  "AWG": {
+    "name": "アルバ・フロリン",
+    "flag": "aw"
+  },
+  "AZN": {
+    "name": "アゼルバイジャン・マナト",
+    "flag": "az"
+  },
+  "BAM": {
+    "name": "ボスニア・ヘルツェゴビナ・マルク",
+    "flag": "ba"
+  },
+  "BBD": {
+    "name": "バルバドス・ドル",
+    "flag": "bb"
+  },
+  "BDT": {
+    "name": "バングラデシュ・タカ",
+    "flag": "bd"
+  },
+  "BGN": {
+    "name": "ブルガリア・レフ",
+    "flag": "bg"
+  },
+  "BHD": {
+    "name": "バーレーン・ディナール",
+    "flag": "bh"
+  },
+  "BIF": {
+    "name": "ブルンジ・フラン",
+    "flag": "bi"
+  },
+  "BMD": {
+    "name": "バミューダ・ドル",
+    "flag": "bm"
+  },
+  "BND": {
+    "name": "ブルネイ・ドル",
+    "flag": "bn"
+  },
+  "BOB": {
+    "name": "ボリビア・ボリビアーノ",
+    "flag": "bo"
+  },
+  "BRL": {
+    "name": "ブラジル・レアル",
+    "flag": "br"
+  },
+  "BSD": {
+    "name": "バハマ・ドル",
+    "flag": "bs"
+  },
+  "BTN": {
+    "name": "ブータン・ニュルタム",
+    "flag": "bt"
+  },
+  "BWP": {
+    "name": "ボツワナ・プラ",
+    "flag": "bw"
+  },
+  "BYN": {
+    "name": "ベラルーシ・ルーブル",
+    "flag": "by"
+  },
+  "BZD": {
+    "name": "ベリーズ・ドル",
+    "flag": "bz"
+  },
+  "CAD": {
+    "name": "カナダ・ドル",
+    "flag": "ca"
+  },
+  "CDF": {
+    "name": "コンゴ・フラン",
+    "flag": "cd"
+  },
+  "CHF": {
+    "name": "スイス・フラン",
+    "flag": "ch"
+  },
+  "CLP": {
+    "name": "チリ・ペソ",
+    "flag": "cl"
+  },
+  "CNH": {
+    "name": "人民元（オフショア）",
+    "flag": "cn"
+  },
+  "CNY": {
+    "name": "人民元",
+    "flag": "cn"
+  },
+  "COP": {
+    "name": "コロンビア・ペソ",
+    "flag": "co"
+  },
+  "CRC": {
+    "name": "コスタリカ・コロン",
+    "flag": "cr"
+  },
+  "CUP": {
+    "name": "キューバ・ペソ",
+    "flag": "cu"
+  },
+  "CVE": {
+    "name": "カーボベルデ・エスクード",
+    "flag": "cv"
+  },
+  "CZK": {
+    "name": "チェコ・コルナ",
+    "flag": "cz"
+  },
+  "DJF": {
+    "name": "ジブチ・フラン",
+    "flag": "dj"
+  },
+  "DKK": {
+    "name": "デンマーク・クローネ",
+    "flag": "dk"
+  },
+  "DOP": {
+    "name": "ドミニカ共和国ペソ",
+    "flag": "do"
+  },
+  "DZD": {
+    "name": "アルジェリア・ディナール",
+    "flag": "dz"
+  },
+  "EGP": {
+    "name": "エジプト・ポンド",
+    "flag": "eg"
+  },
+  "ERN": {
+    "name": "エリトリア・ナクファ",
+    "flag": "er"
+  },
+  "ETB": {
+    "name": "エチオピア・ブル",
+    "flag": "et"
+  },
+  "EUR": {
+    "name": "ユーロ",
+    "flag": "eu"
+  },
+  "FJD": {
+    "name": "フィジー・ドル",
+    "flag": "fj"
+  },
+  "FKP": {
+    "name": "フォークランド諸島ポンド",
+    "flag": "fk"
+  },
+  "GBP": {
+    "name": "英ポンド",
+    "flag": "gb"
+  },
+  "GEL": {
+    "name": "ジョージア・ラリ",
+    "flag": "ge"
+  },
+  "GGP": {
+    "name": "ガーンジー・ポンド",
+    "flag": "gg"
+  },
+  "GHS": {
+    "name": "ガーナ・セディ",
+    "flag": "gh"
+  },
+  "GIP": {
+    "name": "ジブラルタル・ポンド",
+    "flag": "gi"
+  },
+  "GMD": {
+    "name": "ガンビア・ダラシ",
+    "flag": "gm"
+  },
+  "GNF": {
+    "name": "ギニア・フラン",
+    "flag": "gn"
+  },
+  "GTQ": {
+    "name": "グアテマラ・ケツァル",
+    "flag": "gt"
+  },
+  "GYD": {
+    "name": "ガイアナ・ドル",
+    "flag": "gy"
+  },
+  "HKD": {
+    "name": "香港ドル",
+    "flag": "hk"
+  },
+  "HNL": {
+    "name": "ホンジュラス・レンピラ",
+    "flag": "hn"
+  },
+  "HTG": {
+    "name": "ハイチ・グールド",
+    "flag": "ht"
+  },
+  "HUF": {
+    "name": "ハンガリー・フォリント",
+    "flag": "hu"
+  },
+  "IDR": {
+    "name": "インドネシア・ルピア",
+    "flag": "id"
+  },
+  "ILS": {
+    "name": "イスラエル・新シェケル",
+    "flag": "il"
+  },
+  "IMP": {
+    "name": "マン島ポンド",
+    "flag": "im"
+  },
+  "INR": {
+    "name": "インド・ルピー",
+    "flag": "in"
+  },
+  "IQD": {
+    "name": "イラク・ディナール",
+    "flag": "iq"
+  },
+  "IRR": {
+    "name": "イラン・リアル",
+    "flag": "ir"
+  },
+  "ISK": {
+    "name": "アイスランド・クローナ",
+    "flag": "is"
+  },
+  "JEP": {
+    "name": "ジャージー・ポンド",
+    "flag": "je"
+  },
+  "JMD": {
+    "name": "ジャマイカ・ドル",
+    "flag": "jm"
+  },
+  "JOD": {
+    "name": "ヨルダン・ディナール",
+    "flag": "jo"
+  },
+  "JPY": {
+    "name": "日本円",
+    "flag": "jp"
+  },
+  "KES": {
+    "name": "ケニア・シリング",
+    "flag": "ke"
+  },
+  "KGS": {
+    "name": "キルギス・ソム",
+    "flag": "kg"
+  },
+  "KHR": {
+    "name": "カンボジア・リエル",
+    "flag": "kh"
+  },
+  "KMF": {
+    "name": "コモロ・フラン",
+    "flag": "km"
+  },
+  "KPW": {
+    "name": "北朝鮮ウォン",
+    "flag": "kp"
+  },
+  "KRW": {
+    "name": "韓国ウォン",
+    "flag": "kr"
+  },
+  "KWD": {
+    "name": "クウェート・ディナール",
+    "flag": "kw"
+  },
+  "KYD": {
+    "name": "ケイマン諸島ドル",
+    "flag": "ky"
+  },
+  "KZT": {
+    "name": "カザフスタン・テンゲ",
+    "flag": "kz"
+  },
+  "LAK": {
+    "name": "ラオス・キープ",
+    "flag": "la"
+  },
+  "LBP": {
+    "name": "レバノン・ポンド",
+    "flag": "lb"
+  },
+  "LKR": {
+    "name": "スリランカ・ルピー",
+    "flag": "lk"
+  },
+  "LRD": {
+    "name": "リベリア・ドル",
+    "flag": "lr"
+  },
+  "LSL": {
+    "name": "レソト・ロティ",
+    "flag": "ls"
+  },
+  "LYD": {
+    "name": "リビア・ディナール",
+    "flag": "ly"
+  },
+  "MAD": {
+    "name": "モロッコ・ディルハム",
+    "flag": "ma"
+  },
+  "MDL": {
+    "name": "モルドバ・レウ",
+    "flag": "md"
+  },
+  "MGA": {
+    "name": "マダガスカル・アリアリ",
+    "flag": "mg"
+  },
+  "MKD": {
+    "name": "北マケドニア・デナル",
+    "flag": "mk"
+  },
+  "MMK": {
+    "name": "ミャンマー・チャット",
+    "flag": "mm"
+  },
+  "MNT": {
+    "name": "モンゴル・トゥグルグ",
+    "flag": "mn"
+  },
+  "MOP": {
+    "name": "マカオ・パタカ",
+    "flag": "mo"
+  },
+  "MRU": {
+    "name": "モーリタニア・ウギア",
+    "flag": "mr"
+  },
+  "MUR": {
+    "name": "モーリシャス・ルピー",
+    "flag": "mu"
+  },
+  "MVR": {
+    "name": "モルディブ・ルフィア",
+    "flag": "mv"
+  },
+  "MWK": {
+    "name": "マラウイ・クワチャ",
+    "flag": "mw"
+  },
+  "MXN": {
+    "name": "メキシコ・ペソ",
+    "flag": "mx"
+  },
+  "MYR": {
+    "name": "マレーシア・リンギット",
+    "flag": "my"
+  },
+  "MZN": {
+    "name": "モザンビーク・メティカル",
+    "flag": "mz"
+  },
+  "NAD": {
+    "name": "ナミビア・ドル",
+    "flag": "na"
+  },
+  "NGN": {
+    "name": "ナイジェリア・ナイラ",
+    "flag": "ng"
+  },
+  "NIO": {
+    "name": "ニカラグア・コルドバ",
+    "flag": "ni"
+  },
+  "NOK": {
+    "name": "ノルウェー・クローネ",
+    "flag": "no"
+  },
+  "NPR": {
+    "name": "ネパール・ルピー",
+    "flag": "np"
+  },
+  "NZD": {
+    "name": "ニュージーランド・ドル",
+    "flag": "nz"
+  },
+  "OMR": {
+    "name": "オマーン・リアル",
+    "flag": "om"
+  },
+  "PAB": {
+    "name": "パナマ・バルボア",
+    "flag": "pa"
+  },
+  "PEN": {
+    "name": "ペルー・ソル",
+    "flag": "pe"
+  },
+  "PGK": {
+    "name": "パプアニューギニア・キナ",
+    "flag": "pg"
+  },
+  "PHP": {
+    "name": "フィリピン・ペソ",
+    "flag": "ph"
+  },
+  "PKR": {
+    "name": "パキスタン・ルピー",
+    "flag": "pk"
+  },
+  "PLN": {
+    "name": "ポーランド・ズウォティ",
+    "flag": "pl"
+  },
+  "PYG": {
+    "name": "パラグアイ・グアラニー",
+    "flag": "py"
+  },
+  "QAR": {
+    "name": "カタール・リアル",
+    "flag": "qa"
+  },
+  "RON": {
+    "name": "ルーマニア・レウ",
+    "flag": "ro"
+  },
+  "RSD": {
+    "name": "セルビア・ディナール",
+    "flag": "rs"
+  },
+  "RUB": {
+    "name": "ロシア・ルーブル",
+    "flag": "ru"
+  },
+  "RWF": {
+    "name": "ルワンダ・フラン",
+    "flag": "rw"
+  },
+  "SAR": {
+    "name": "サウジアラビア・リヤル",
+    "flag": "sa"
+  },
+  "SBD": {
+    "name": "ソロモン諸島ドル",
+    "flag": "sb"
+  },
+  "SCR": {
+    "name": "セーシェル・ルピー",
+    "flag": "sc"
+  },
+  "SDG": {
+    "name": "スーダン・ポンド",
+    "flag": "sd"
+  },
+  "SEK": {
+    "name": "スウェーデン・クローナ",
+    "flag": "se"
+  },
+  "SGD": {
+    "name": "シンガポール・ドル",
+    "flag": "sg"
+  },
+  "SHP": {
+    "name": "セントヘレナ・ポンド",
+    "flag": "sh"
+  },
+  "SLL": {
+    "name": "シエラレオネ・レオン",
+    "flag": "sl"
+  },
+  "SOS": {
+    "name": "ソマリア・シリング",
+    "flag": "so"
+  },
+  "SRD": {
+    "name": "スリナム・ドル",
+    "flag": "sr"
+  },
+  "SSP": {
+    "name": "南スーダン・ポンド",
+    "flag": "ss"
+  },
+  "STN": {
+    "name": "サントメ・プリンシペ・ドブラ",
+    "flag": "st"
+  },
+  "SVC": {
+    "name": "エルサルバドル・コロン",
+    "flag": "sv"
+  },
+  "SYP": {
+    "name": "シリア・ポンド",
+    "flag": "sy"
+  },
+  "SZL": {
+    "name": "エスワティニ・リランゲニ",
+    "flag": "sz"
+  },
+  "THB": {
+    "name": "タイ・バーツ",
+    "flag": "th"
+  },
+  "TJS": {
+    "name": "タジキスタン・ソモニ",
+    "flag": "tj"
+  },
+  "TMT": {
+    "name": "トルクメニスタン・マナト",
+    "flag": "tm"
+  },
+  "TND": {
+    "name": "チュニジア・ディナール",
+    "flag": "tn"
+  },
+  "TOP": {
+    "name": "トンガ・パアンガ",
+    "flag": "to"
+  },
+  "TRY": {
+    "name": "トルコ・リラ",
+    "flag": "tr"
+  },
+  "TTD": {
+    "name": "トリニダード・トバゴ・ドル",
+    "flag": "tt"
+  },
+  "TWD": {
+    "name": "台湾ドル",
+    "flag": "tw"
+  },
+  "TZS": {
+    "name": "タンザニア・シリング",
+    "flag": "tz"
+  },
+  "UAH": {
+    "name": "ウクライナ・フリヴニャ",
+    "flag": "ua"
+  },
+  "UGX": {
+    "name": "ウガンダ・シリング",
+    "flag": "ug"
+  },
+  "USD": {
+    "name": "米ドル",
+    "flag": "us"
+  },
+  "UYU": {
+    "name": "ウルグアイ・ペソ",
+    "flag": "uy"
+  },
+  "UZS": {
+    "name": "ウズベキスタン・スム",
+    "flag": "uz"
+  },
+  "VES": {
+    "name": "ベネズエラ・ボリバル",
+    "flag": "ve"
+  },
+  "VND": {
+    "name": "ベトナム・ドン",
+    "flag": "vn"
+  },
+  "VUV": {
+    "name": "バヌアツ・バツ",
+    "flag": "vu"
+  },
+  "WST": {
+    "name": "サモア・タラ",
+    "flag": "ws"
+  },
+  "XAF": {
+    "name": "CFAフラン（BEAC）",
+    "flag": "cm"
+  },
+  "XCD": {
+    "name": "東カリブ・ドル",
+    "flag": "ag"
+  },
+  "XOF": {
+    "name": "CFAフラン（BCEAO）",
+    "flag": "sn"
+  },
+  "XPF": {
+    "name": "CFPフラン",
+    "flag": "pf"
+  },
+  "YER": {
+    "name": "イエメン・リアル",
+    "flag": "ye"
+  },
+  "ZAR": {
+    "name": "南アフリカ・ランド",
+    "flag": "za"
+  },
+  "ZMW": {
+    "name": "ザンビア・クワチャ",
+    "flag": "zm"
+  },
+  "ZWL": {
+    "name": "ジンバブエ・ドル",
+    "flag": "zw"
+  }
 }
