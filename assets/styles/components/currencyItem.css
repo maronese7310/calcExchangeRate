@@ -21,8 +21,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.25rem;
-    /* margin-left: 0.75rem; */
-    /* space from flag */
+    margin-left: 0.25rem;
+    /* smaller gap from flag */
 }
 
 /* flag icon on left */
