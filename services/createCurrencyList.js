@@ -9,10 +9,16 @@ async function createCurrencyList() {
 
     localStorageData.forEach(code => {
         const className = currencyData[code]?.flag || '';
+        const name = currencyData[code]?.name || '';
+
         const li = document.createElement('li');
         li.innerHTML = `
-            <span class="fi fi-${className}" flag></span>
-            <span class="currency-code">${code}</span>
+            <div class="currency-info">
+                <span class="fi fi-${className}"></span>
+                <span class="currency-name">${name}</span>
+                <span class="currency-code">${code}</span>
+            </div>
+            <input class="amount" type="text" value="0" />
         `;
         currencyListElement.appendChild(li);
     });
