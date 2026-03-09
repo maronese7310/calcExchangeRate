@@ -26,5 +26,5 @@ async function initialProcess() {
     mainScreen.classList.remove("hidden");
 
     // 4) 通貨リストの作成
-    createCurrencyList();
+    await createCurrencyList();
 };
