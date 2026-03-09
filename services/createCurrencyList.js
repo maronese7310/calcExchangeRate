@@ -11,4 +11,4 @@ function createCurrencyList() {
     });
 }
 
-export { createCurrencyList };
+export default createCurrencyList;
