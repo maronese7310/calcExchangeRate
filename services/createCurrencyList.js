@@ -21,6 +21,15 @@ async function createCurrencyList() {
             <input class="amount" type="text" value="0" />
         `;
         currencyListElement.appendChild(li);
+
+        // format input value with thousand separators
+        const input = li.querySelector('.amount');
+        input.addEventListener('input', () => {
+            let val = input.value.replace(/,/g, '');
+            if (val === '' || isNaN(val)) return;
+            val = parseFloat(val);
+            input.value = val.toLocaleString('en-US');
+        });
     });
 }
 
