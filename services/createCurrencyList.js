@@ -1,4 +1,4 @@
-import localStorageData from '..assets/data/localStorageData.js';
+import localStorageData from '../assets/data/localStorageData.js';
 
 function createCurrencyList() {
     const currencyListElement = document.getElementById('currency-list');
