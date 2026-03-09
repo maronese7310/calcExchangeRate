@@ -1,6 +1,7 @@
 import fetchRate from "../../services/fetchRate.js";
 import formatTimestamp from "../../services/formatter.js";
 import { rates } from "../data/rates.js";
+import createCurrencyList from "../../services/createCurrencyList.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
@@ -23,4 +24,7 @@ async function initialProcess() {
 
     startScreen.classList.add("hidden");
     mainScreen.classList.remove("hidden");
+
+    // 4) 通貨リストの作成
+    createCurrencyList();
 };
