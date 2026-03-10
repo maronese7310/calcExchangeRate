@@ -42,7 +42,7 @@ async function createCurrencyList() {
 
         const input = li.querySelector('.amount');
         // 計算した初期値を3桁区切りで設定
-        const fractionDigits = checkDigits(rates.exchangeRate[code]);
+        const fractionDigits = checkDigits(rates.exchangeRate[code], code);
         input.value = initialValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
         currencyListElement.appendChild(li);
 
@@ -63,7 +63,7 @@ async function createCurrencyList() {
                 const targetCode = item.dataset.currencyCode;
                 const newValue = calcExchangeRate(targetCode, sourceValue);
 
-                const fractionDigits = checkDigits(rates.exchangeRate[targetCode]);
+                const fractionDigits = checkDigits(rates.exchangeRate[targetCode], targetCode);
                 targetInput.value = newValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
             });
         });
