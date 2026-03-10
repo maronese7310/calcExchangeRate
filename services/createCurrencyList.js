@@ -31,7 +31,7 @@ async function createCurrencyList() {
 
         const initialValue = calcExchangeRate(code, initialValueInJpy);
 
-        li.innerHTML = `
+        li.innerHTML = /*html*/`
             <span class="fi fi-${className}"></span>
             <div class="currency-info">
                 <span class="currency-name">${name}</span>
@@ -42,7 +42,7 @@ async function createCurrencyList() {
 
         const input = li.querySelector('.amount');
         // 計算した初期値を3桁区切りで設定
-        const fractionDigits = checkDigits(rates.exchangeRate[code], code);
+        const fractionDigits = checkDigits(initialValue, rates.exchangeRate[code], code);
         input.value = initialValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
         currencyListElement.appendChild(li);
 
@@ -59,28 +59,40 @@ async function createCurrencyList() {
             selectedCurrency[1] = sourceValue;
 
             document.querySelectorAll('#currency-list li').forEach(item => {
+                // 入力元の値は再計算・再フォーマットしない
+                if (item === sourceLi) {
+                    return;
+                }
+
                 const targetInput = item.querySelector('.amount');
                 const targetCode = item.dataset.currencyCode;
                 const newValue = calcExchangeRate(targetCode, sourceValue);
 
-                const fractionDigits = checkDigits(rates.exchangeRate[targetCode], targetCode);
+                const fractionDigits = checkDigits(newValue, rates.exchangeRate[targetCode], targetCode);
                 targetInput.value = newValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
             });
         });
     });
 }
 
-export default createCurrencyList;
+function checkDigits(value, exchangeRate, code) {
+    // 値が小数部を持つ場合は、小数点以下2桁を表示する
+    if (value % 1 !== 0) {
+        return 2;
+    }
 
+    // レートが1未満の通貨は、小数点以下2桁を表示
+    if (exchangeRate < 1) {
+        return 2;
+    }
 
-function checkDigits(exchangeRate, code) {
+    // 基準通貨は整数表示
     if (code === selectedCurrency[0]) {
         return 0;
     }
-    else if (exchangeRate < 1) {
-        return 2;
-    }
-    else {
-        return 0;
-    }
+
+    // それ以外（値が整数で、レートが1以上）は整数表示
+    return 0;
 }
+
+export default createCurrencyList;
