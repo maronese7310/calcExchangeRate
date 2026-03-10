@@ -3,6 +3,7 @@ import { rates } from '../assets/data/rates.js';
 import calcExchangeRate from './calc.js';
 
 async function createCurrencyList() {
+    // List作成と責務分掌させる
     const response = await fetch('assets/data/currencies.json');
     const currencyData = await response.json();
 
@@ -29,6 +30,8 @@ async function createCurrencyList() {
         li.dataset.currencyCode = code;
 
         const initialValue = calcExchangeRate(code, initialValueInJpy);
+        // debug
+        console.log(initialValue);
 
         li.innerHTML = `
             <span class="fi fi-${className}"></span>
@@ -40,8 +43,9 @@ async function createCurrencyList() {
         `;
 
         const input = li.querySelector('.amount');
-        // 計算した初期値を3桁区切り・小数点以下2桁で設定
-        input.value = initialValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        // 計算した初期値を3桁区切りで設定
+        const fractionDigits = (rates.exchangeRate[code] < 1) ? 2 : 0;
+        input.value = initialValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
 
         currencyListElement.appendChild(li);
 
@@ -57,11 +61,8 @@ async function createCurrencyList() {
             // 編集された通貨の金額を、基準となる日本円(JPY)の価値に換算する
             let valueInJpy;
             if (sourceCode === 'JPY') {
-                // 編集されたのがJPYなら、その値がそのままJPYでの価値になる
                 valueInJpy = sourceValue;
             } else {
-                // JPY以外の通貨なら、レートで割ってJPYでの価値を算出する
-                // valueInJpy = sourceValue / rates.exchangeRate[sourceCode];
                 valueInJpy = calcExchangeRate(sourceCode, sourceValue);
             }
 
