@@ -19,6 +19,11 @@ async function initialProcess() {
 
 
     // 3) メイン画面へ遷移
+    const rateTimeElement = document.getElementById("rate-time");
+    if (rateTimeElement && rates && rates.fetchDate) {
+        rateTimeElement.textContent = rates.fetchDate;
+    }
+
     const startScreen = document.getElementById("start-screen");
     const mainScreen = document.getElementById("main-screen");
 
