@@ -55,7 +55,8 @@ async function createCurrencyList() {
             // 入力値からカンマを削除して数値に変換
             const sourceValue = parseFloat(sourceInput.value.replace(/,/g, '')) || 0;
 
-            selectedCurrency = [sourceCode, sourceValue];
+            selectedCurrency[0] = sourceCode;
+            selectedCurrency[1] = sourceValue;
 
             document.querySelectorAll('#currency-list li').forEach(item => {
                 const targetInput = item.querySelector('.amount');
