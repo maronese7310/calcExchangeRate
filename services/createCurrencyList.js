@@ -11,8 +11,7 @@ async function createCurrencyList() {
 
     // 初期表示の基準となる通貨と金額を取得
     const [initialCode, initialAmount] = topCurrency;
-    // 基準通貨の金額を日本円(JPY)での価値に換算
-    const initialValueInJpy = initialAmount / rates.exchangeRate[initialCode];
+    const initialValueInJpy = initialAmount * (rates.exchangeRate[initialCode] / rates.exchangeRate["JPY"]);
 
     homeCurrencyCode.forEach(code => {
         const className = currencyData[code]?.flag || '';
