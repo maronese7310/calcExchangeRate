@@ -26,7 +26,8 @@
 
 /* flag icon on left */
 #currency-list li .fi {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    margin-right: 0.25rem;
 }
 
 .currency-name {
@@ -51,6 +52,7 @@
     background: transparent;
     color: #fff;
     outline: none;
+    margin-left: auto;
 }
 
 #currency-list li .amount::-webkit-inner-spin-button,
