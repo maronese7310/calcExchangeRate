@@ -5,4 +5,6 @@ function calcExchangeRate(code, amount) {
     const targetRate = rates.exchangeRate[code];
 
     return amount * (targetRate / baseRate);
-} 
+}
+
+export default calcExchangeRate;
