@@ -45,7 +45,7 @@
 /* editable amount to right */
 #currency-list li .amount {
     width: auto;
-    max-width: 120px;
+    max-width: 100px;
     font-size: 1.25rem;
     text-align: right;
     border: none;
