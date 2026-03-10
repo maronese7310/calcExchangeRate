@@ -55,12 +55,13 @@ async function createCurrencyList() {
             // 入力値からカンマを削除して数値に変換
             const sourceValue = parseFloat(sourceInput.value.replace(/,/g, '')) || 0;
 
-            let valueInJpy = calcExchangeRate(sourceCode, sourceValue);
+            // let valueInJpy = calcExchangeRate(sourceCode, sourceValue);
 
             document.querySelectorAll('#currency-list li').forEach(item => {
                 const targetInput = item.querySelector('.amount');
                 const targetCode = item.dataset.currencyCode;
-                const newValue = calcExchangeRate(targetCode, valueInJpy);
+                // const newValue = calcExchangeRate(targetCode, valueInJpy);
+                const newValue = calcExchangeRate(targetCode, sourceValue);
 
                 const fractionDigits = checkDigits(rates.exchangeRate[targetCode]);
                 targetInput.value = newValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
