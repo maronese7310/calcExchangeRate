@@ -1,7 +1,11 @@
-const localStorageData = [
+const homeCurrencyCode = [
     "JPY",
     "USD",
     "EUR"
 ];
 
-export default localStorageData;
+const topCurrency = [
+    "JPY", 10000
+]
+
+export { homeCurrencyCode, topCurrency };
