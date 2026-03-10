@@ -11,13 +11,14 @@ async function createCurrencyList() {
 
     // 初期表示の基準となる通貨と金額を取得
     const [initialCode, initialAmount] = topCurrency;
+    const baseCurrency = 'JPY';
 
     // 基準通貨の金額を日本円(JPY)での価値に換算
     let initialValueInJpy;
     if (initialCode === "JPY") {
         initialValueInJpy = initialAmount;
     } else {
-        initialValueInJpy = initialAmount / rates.exchangeRate[initialCode];
+        initialValueInJpy = initialAmount * (rates.exchangeRate[baseCurrency] / rates.exchangeRate[initialCode]);
     }
 
     homeCurrencyCode.forEach(code => {
@@ -60,7 +61,8 @@ async function createCurrencyList() {
                 valueInJpy = sourceValue;
             } else {
                 // JPY以外の通貨なら、レートで割ってJPYでの価値を算出する
-                valueInJpy = sourceValue / rates.exchangeRate[sourceCode];
+                // valueInJpy = sourceValue / rates.exchangeRate[sourceCode];
+                valueInJpy = calcExchangeRate(sourceCode, sourceValue);
             }
 
             document.querySelectorAll('#currency-list li').forEach(item => {
