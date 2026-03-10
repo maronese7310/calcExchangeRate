@@ -30,8 +30,6 @@ async function createCurrencyList() {
         li.dataset.currencyCode = code;
 
         const initialValue = calcExchangeRate(code, initialValueInJpy);
-        // debug
-        console.log(initialValue);
 
         li.innerHTML = `
             <span class="fi fi-${className}"></span>
@@ -44,9 +42,8 @@ async function createCurrencyList() {
 
         const input = li.querySelector('.amount');
         // 計算した初期値を3桁区切りで設定
-        const fractionDigits = (rates.exchangeRate[code] < 1) ? 2 : 0;
+        const fractionDigits = checkDigits(rates.exchangeRate[code]);
         input.value = initialValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
-
         currencyListElement.appendChild(li);
 
         // 金額が入力された際のイベントリスナーを設定
@@ -70,10 +67,17 @@ async function createCurrencyList() {
                 const targetInput = item.querySelector('.amount');
                 const targetCode = item.dataset.currencyCode;
                 const newValue = calcExchangeRate(targetCode, valueInJpy);
-                targetInput.value = newValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                const fractionDigits = checkDigits(rates.exchangeRate[targetCode]);
+                targetInput.value = newValue.toLocaleString('en-US', { minimumFractionDigits: fractionDigits, maximumFractionDigits: fractionDigits });
             });
         });
     });
 }
 
 export default createCurrencyList;
+
+
+function checkDigits(exchangeRate) {
+    (exchangeRate < 1) ? 2 : 0
+}
