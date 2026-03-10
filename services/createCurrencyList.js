@@ -1,4 +1,4 @@
-import { homeCurrencyCode, topCurrency } from '../assets/data/localStorageData.js';
+import { homeCurrencyCode, selectedCurrency } from '../assets/data/localStorageData.js';
 import { rates } from '../assets/data/rates.js';
 import calcExchangeRate from './calc.js';
 
@@ -11,7 +11,7 @@ async function createCurrencyList() {
     currencyListElement.innerHTML = '';
 
     // 初期表示の基準となる通貨と金額を取得
-    const [initialCode, initialAmount] = topCurrency;
+    const [initialCode, initialAmount] = selectedCurrency;
     const baseCurrency = 'JPY';
 
     // 基準通貨の金額を日本円(JPY)での価値に換算
@@ -55,13 +55,7 @@ async function createCurrencyList() {
             // 入力値からカンマを削除して数値に変換
             const sourceValue = parseFloat(sourceInput.value.replace(/,/g, '')) || 0;
 
-            // 編集された通貨の金額を、基準となる日本円(JPY)の価値に換算する
-            let valueInJpy;
-            if (sourceCode === 'JPY') {
-                valueInJpy = sourceValue;
-            } else {
-                valueInJpy = calcExchangeRate(sourceCode, sourceValue);
-            }
+            let valueInJpy = calcExchangeRate(sourceCode, sourceValue);
 
             document.querySelectorAll('#currency-list li').forEach(item => {
                 const targetInput = item.querySelector('.amount');
@@ -79,5 +73,5 @@ export default createCurrencyList;
 
 
 function checkDigits(exchangeRate) {
-    (exchangeRate < 1) ? 2 : 0
+    return (exchangeRate < 1) ? 2 : 0;
 }
