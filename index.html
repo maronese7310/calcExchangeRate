@@ -30,6 +30,7 @@
     <!-- scripts -->
     <script type="module" src="assets/script/main.js"></script>
     <script type="module" src="services/createCurrencyList.js"></script>
+    <script type="module" src="data/rates.js"></script>
 
 </head>
 
@@ -72,7 +73,7 @@
                     </h1>
 
                     <p class="rate-time">
-                        2026/03/07 10:00(JST)
+                        <script>rates.fetchDate</script>
                     </p>
 
                 </div>
