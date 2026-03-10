@@ -73,6 +73,14 @@ async function createCurrencyList() {
 export default createCurrencyList;
 
 
-function checkDigits(exchangeRate) {
-    return (exchangeRate < 1) ? 2 : 0;
+function checkDigits(exchangeRate, code) {
+    if (code === selectedCurrency[0]) {
+        return 0;
+    }
+    else if (exchangeRate < 1) {
+        return 2;
+    }
+    else {
+        return 0;
+    }
 }
