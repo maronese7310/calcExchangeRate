@@ -50,9 +50,18 @@ async function createCurrencyList() {
             const sourceLi = sourceInput.closest('li');
             const sourceCode = sourceLi.dataset.currencyCode;
 
-            const sourceValueString = sourceInput.value.replace(/,/g, '');
-            const sourceValue = parseFloat(sourceValueString) || 0;
-            const valueInJpy = sourceValue / rates.exchangeRate[sourceCode];
+            // 入力値からカンマを削除して数値に変換
+            const sourceValue = parseFloat(sourceInput.value.replace(/,/g, '')) || 0;
+
+            // 編集された通貨の金額を、基準となる日本円(JPY)の価値に換算する
+            let valueInJpy;
+            if (sourceCode === 'JPY') {
+                // 編集されたのがJPYなら、その値がそのままJPYでの価値になる
+                valueInJpy = sourceValue;
+            } else {
+                // JPY以外の通貨なら、レートで割ってJPYでの価値を算出する
+                valueInJpy = sourceValue / rates.exchangeRate[sourceCode];
+            }
 
             document.querySelectorAll('#currency-list li').forEach(item => {
                 const targetInput = item.querySelector('.amount');
