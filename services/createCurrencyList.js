@@ -18,7 +18,7 @@ async function createCurrencyList() {
                 <span class="currency-name">${name}</span>
                 <span class="currency-code">${code}</span>
             </div>
-            <input class="amount" type="text" value="0" />
+            <input class="amount" type="text" inputmode="decimal" value="0" />
         `;
         currencyListElement.appendChild(li);
 
