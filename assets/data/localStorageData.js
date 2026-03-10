@@ -1,7 +1,12 @@
 const homeCurrencyCode = [
     "JPY",
     "USD",
-    "EUR"
+    "EUR",
+    "GBP",
+    "AUD",
+    "CAD",
+    "CHF",
+    "CNY",
 ];
 
 const topCurrency = [
