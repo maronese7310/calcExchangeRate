@@ -9,8 +9,8 @@ const homeCurrencyCode = [
     "CNY",
 ];
 
-const topCurrency = [
+let selectedCurrency = [
     "JPY", 10000
 ]
 
-export { homeCurrencyCode, topCurrency };
+export { homeCurrencyCode, selectedCurrency };
