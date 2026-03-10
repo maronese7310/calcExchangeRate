@@ -16,6 +16,7 @@ async function initialProcess() {
     rates.fetchDate = formatTimestamp(rateData.timestamp);
 
     rates.exchangeRate = rateData.rates;
+    rates.exchangeRate["JPY"] = 1; // 基準通貨としてJPYを追加
 
 
     // 3) メイン画面へ遷移
