@@ -29,8 +29,6 @@
 
     <!-- scripts -->
     <script type="module" src="assets/script/main.js"></script>
-    <script type="module" src="services/createCurrencyList.js"></script>
-    <script type="module" src="data/rates.js"></script>
 
 </head>
 
@@ -72,9 +70,7 @@
                         本日のレート
                     </h1>
 
-                    <p class="rate-time">
-                        <script>rates.fetchDate</script>
-                    </p>
+                    <p id="rate-time" class="rate-time"></p>
 
                 </div>
 
