@@ -7,6 +7,8 @@ const homeCurrencyCode = [
     "CAD",
     "CHF",
     "CNY",
+    "HKD",
+    "INR",
 ];
 
 let selectedCurrency = [
