@@ -2,6 +2,7 @@ import fetchRate from "../../services/fetchRate.js";
 import formatTimestamp from "../../services/formatter.js";
 import { rates } from "../data/rates.js";
 import createCurrencyList from "../../services/createCurrencyList.js";
+import createBottomSheet from "../../services/createBottomSheet.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initialProcess();
