@@ -33,4 +33,7 @@ async function initialProcess() {
 
     // 4) 通貨リストの作成
     await createCurrencyList();
+
+    // 5) ボトムシート イベントリスナーの起動
+    createBottomSheet();
 };
