@@ -8,3 +8,5 @@ function createBottomSheet() {
         bottomSheet.hidden = false;
     });
 }
+
+export default createBottomSheet;
