@@ -1,4 +1,4 @@
-import { rates } from "../assets/data/rates";
+// import { rates } from "../assets/data/rates";
 
 function createBottomSheet() {
     const addButton = document.getElementById('add-button');
