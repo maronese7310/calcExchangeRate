@@ -10,11 +10,6 @@ async function createCurrencyList() {
     const currencyListElement = document.getElementById('currency-list');
     currencyListElement.innerHTML = '';
 
-    // リスト要素に高さとスクロールを設定します。
-    // 注: 本来はCSSファイルで管理することが推奨されます。
-    currencyListElement.style.height = 'calc(100vh - 180px)'; // 例: 画面の高さに応じて調整
-    currencyListElement.style.overflowY = 'auto';
-
     // 初期表示の基準となる通貨と金額を取得
     const [initialCode, initialAmount] = selectedCurrency;
     const baseCurrency = 'JPY';
