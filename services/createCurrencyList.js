@@ -42,7 +42,7 @@ async function createCurrencyList() {
                 <span class="currency-name">${name}</span>
                 <span class="currency-code">${code}</span>
             </div>
-            <input class="amount" type="text" inputmode="decimal" />
+            <input class="amount" type="text" inputmode="decimal" onfocus="this.select();"/>
         `;
 
         const input = li.querySelector('.amount');
