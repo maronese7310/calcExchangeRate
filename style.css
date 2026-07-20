@@ -224,26 +224,10 @@ input {
   will-change: transform;
 }
 
-/* 国旗を包むラッパー。基準通貨バッジは国旗に重ねず、左側の余白スペースに配置する */
+/* 国旗を包むラッパー */
 .flag-wrap {
   position: relative;
   flex-shrink: 0;
-}
-
-.base-badge {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: -10px;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-green);
-}
-
-.base-badge.filled {
-  display: block;
 }
 
 /* 国旗アイコン: 角丸四角。追加/削除ボタンより一回り小さい0.8倍サイズ */

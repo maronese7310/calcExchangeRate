@@ -307,11 +307,7 @@ function buildCurrencyRow(code) {
     flag.style.visibility = "hidden";
   };
 
-  const badge = document.createElement("span");
-  badge.className = "base-badge" + (code === BASE_CODE ? " filled" : "");
-
   flagWrap.appendChild(flag);
-  flagWrap.appendChild(badge);
 
   const info = document.createElement("div");
   info.className = "currency-info";
