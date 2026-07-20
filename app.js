@@ -260,6 +260,15 @@ const TRASH_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColo
 
 const SWIPE_OPEN_OFFSET = -78;
 
+const DRAG_HANDLE_SVG = `<svg viewBox="0 0 24 24" fill="currentColor">
+  <circle cx="9" cy="6" r="1.6"></circle>
+  <circle cx="15" cy="6" r="1.6"></circle>
+  <circle cx="9" cy="12" r="1.6"></circle>
+  <circle cx="15" cy="12" r="1.6"></circle>
+  <circle cx="9" cy="18" r="1.6"></circle>
+  <circle cx="15" cy="18" r="1.6"></circle>
+</svg>`;
+
 function buildCurrencyRow(code) {
   const master = CURRENCY_MAP.get(code) || { nameJa: code, nameEn: code };
   const li = document.createElement("li");
@@ -345,14 +354,22 @@ function buildCurrencyRow(code) {
     }
   });
 
+  const dragHandle = document.createElement("span");
+  dragHandle.className = "drag-handle";
+  dragHandle.setAttribute("aria-label", "並び替え");
+  dragHandle.innerHTML = DRAG_HANDLE_SVG;
+
   content.appendChild(flagWrap);
   content.appendChild(info);
   content.appendChild(input);
+  content.appendChild(dragHandle);
   li.appendChild(content);
 
   if (code !== BASE_CODE) {
     attachSwipeToDelete(content);
   }
+
+  attachReorderHandle(li, dragHandle);
 
   return li;
 }
@@ -438,6 +455,82 @@ function closeOtherSwipeRows(exceptContent) {
       el._closeSwipe();
     }
   });
+}
+
+// ドラッグハンドルを縦方向にドラッグして通貨の並び順を入れ替える
+function attachReorderHandle(li, handle) {
+  handle.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    startReorder(li, e);
+  });
+}
+
+function startReorder(li, startEvent) {
+  const list = currencyListEl;
+  let startY = startEvent.clientY;
+
+  li.classList.add("dragging");
+  li.style.position = "relative";
+  li.style.zIndex = "10";
+  li.style.transition = "none";
+
+  try {
+    li.setPointerCapture(startEvent.pointerId);
+  } catch (err) {
+    /* noop */
+  }
+
+  function onMove(ev) {
+    const deltaY = ev.clientY - startY;
+    li.style.transform = `translateY(${deltaY}px)`;
+
+    const children = Array.from(list.children);
+    const index = children.indexOf(li);
+    const draggedRect = li.getBoundingClientRect();
+    const draggedCenter = draggedRect.top + draggedRect.height / 2;
+
+    const prev = children[index - 1];
+    if (prev) {
+      const prevRect = prev.getBoundingClientRect();
+      if (draggedCenter < prevRect.top + prevRect.height / 2) {
+        list.insertBefore(li, prev);
+        startY = ev.clientY;
+        li.style.transform = "translateY(0px)";
+        return;
+      }
+    }
+
+    const next = children[index + 1];
+    if (next) {
+      const nextRect = next.getBoundingClientRect();
+      if (draggedCenter > nextRect.top + nextRect.height / 2) {
+        list.insertBefore(li, next.nextSibling);
+        startY = ev.clientY;
+        li.style.transform = "translateY(0px)";
+        return;
+      }
+    }
+  }
+
+  function onEnd() {
+    li.removeEventListener("pointermove", onMove);
+    li.removeEventListener("pointerup", onEnd);
+    li.removeEventListener("pointercancel", onEnd);
+    li.classList.remove("dragging");
+    li.style.transition = "";
+    li.style.transform = "";
+    li.style.zIndex = "";
+    li.style.position = "";
+
+    // DOM上の並び順を正としてhomeListを更新する
+    homeList = Array.from(list.children).map((el) => el.dataset.code);
+    persistState();
+  }
+
+  li.addEventListener("pointermove", onMove);
+  li.addEventListener("pointerup", onEnd);
+  li.addEventListener("pointercancel", onEnd);
 }
 
 // アクティブ行の入力中、他の行の表示だけをその場で更新する(DOM再構築なし)

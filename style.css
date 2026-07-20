@@ -300,6 +300,35 @@ input {
   border-bottom-color: var(--color-text-main);
 }
 
+/* 並び替え用のドラッグハンドル */
+.drag-handle {
+  width: 22px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-sub);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.drag-handle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.currency-row.dragging {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.55);
+  background: var(--color-bg);
+}
+
+.currency-row.dragging .row-content {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+}
+
 /* 幅測定用の非表示ミラー要素 */
 .amount-mirror {
   position: absolute;
