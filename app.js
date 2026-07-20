@@ -1,0 +1,444 @@
+"use strict";
+
+// ===== 定数 =====
+const API_URL = "https://api.exchangerate.fun/latest?base=JPY";
+const STORAGE_KEY_RATES = "fxRatesData";
+const STORAGE_KEY_HOME_LIST = "fxHomeList";
+const STORAGE_KEY_ACTIVE_STATE = "fxActiveState";
+const BASE_CODE = "JPY";
+const DEFAULT_AMOUNT = 1000;
+
+// ===== 状態 =====
+let ratesData = null; // { timestamp, base, rates, fetchedDate }
+let homeList = []; // 例: ["JPY", "USD", "EUR"]
+let activeCode = BASE_CODE;
+let activeAmount = DEFAULT_AMOUNT;
+
+// ===== DOM参照 =====
+const splashView = document.getElementById("splashView");
+const splashSubtext = document.getElementById("splashSubtext");
+const mainView = document.getElementById("mainView");
+const searchView = document.getElementById("searchView");
+const currencyListEl = document.getElementById("currencyList");
+const searchResultsEl = document.getElementById("searchResults");
+const searchInputEl = document.getElementById("searchInput");
+const rateTimestampEl = document.getElementById("rateTimestamp");
+const addButton = document.getElementById("addButton");
+const closeSearchButton = document.getElementById("closeSearchButton");
+const toastEl = document.getElementById("toast");
+
+// ===== ユーティリティ =====
+
+// デバイスのローカル日付を "YYYY-MM-DD" 形式で返す
+function todayStr() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+// UNIXタイムスタンプ(秒)をJSTの "YYYY-MM-DD HH:MM(JST)" 形式に変換
+function formatTimestampJST(unixSeconds) {
+  const d = new Date(unixSeconds * 1000);
+  // sv-SEロケールは "YYYY-MM-DD HH:MM:SS" 形式を返すため利用する
+  const jstStr = d.toLocaleString("sv-SE", { timeZone: "Asia/Tokyo" });
+  const [datePart, timePart] = jstStr.split(" ");
+  const hm = timePart.slice(0, 5);
+  return `${datePart} ${hm}(JST)`;
+}
+
+// レート値に応じた小数点以下の桁数を決定する
+// ・0.1未満: 小数第2位まで
+// ・1未満: 小数第1位まで
+// ・1以上: 整数(3桁カンマ区切り)
+function decimalPlacesForRate(rate) {
+  if (rate < 0.1) return 2;
+  if (rate < 1) return 1;
+  return 0;
+}
+
+// 数値を通貨コードに応じたフォーマット(3桁区切り+小数桁)に変換
+function formatAmount(value, code) {
+  const rate = ratesData.rates[code];
+  const decimals = rate === undefined ? 0 : decimalPlacesForRate(rate);
+  if (!isFinite(value)) value = 0;
+  return value.toLocaleString("ja-JP", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  });
+}
+
+// カンマ区切り文字列 -> 数値
+function parseAmount(str) {
+  const cleaned = String(str).replace(/,/g, "").trim();
+  const n = parseFloat(cleaned);
+  return isNaN(n) ? 0 : n;
+}
+
+// activeCode/activeAmount を基準に、指定通貨の換算後の数値を返す
+function convertedValue(code) {
+  if (code === activeCode) return activeAmount;
+  const baseRate = ratesData.rates[activeCode] !== undefined ? ratesData.rates[activeCode] : (activeCode === BASE_CODE ? 1 : undefined);
+  const targetRate = ratesData.rates[code] !== undefined ? ratesData.rates[code] : (code === BASE_CODE ? 1 : undefined);
+  if (baseRate === undefined || targetRate === undefined || baseRate === 0) return 0;
+  return activeAmount * (targetRate / baseRate);
+}
+
+function showToast(message) {
+  toastEl.textContent = message;
+  toastEl.classList.remove("hidden");
+  toastEl.classList.add("show");
+  window.clearTimeout(showToast._timer);
+  showToast._timer = window.setTimeout(() => {
+    toastEl.classList.remove("show");
+    window.setTimeout(() => toastEl.classList.add("hidden"), 200);
+  }, 1800);
+}
+
+// ===== localStorage =====
+
+function getStoredRates() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_RATES);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function saveRates(data) {
+  localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(data));
+}
+
+function loadHomeListAndActiveState() {
+  let list;
+  try {
+    list = JSON.parse(localStorage.getItem(STORAGE_KEY_HOME_LIST));
+  } catch (e) {
+    list = null;
+  }
+  if (!Array.isArray(list) || list.length === 0) {
+    list = [BASE_CODE];
+  }
+  if (!list.includes(BASE_CODE)) {
+    list.unshift(BASE_CODE);
+  }
+  homeList = list;
+
+  let state;
+  try {
+    state = JSON.parse(localStorage.getItem(STORAGE_KEY_ACTIVE_STATE));
+  } catch (e) {
+    state = null;
+  }
+  if (state && homeList.includes(state.code) && isFinite(state.amount)) {
+    activeCode = state.code;
+    activeAmount = state.amount;
+  } else {
+    activeCode = homeList[0];
+    activeAmount = DEFAULT_AMOUNT;
+  }
+}
+
+function persistState() {
+  localStorage.setItem(STORAGE_KEY_HOME_LIST, JSON.stringify(homeList));
+  localStorage.setItem(
+    STORAGE_KEY_ACTIVE_STATE,
+    JSON.stringify({ code: activeCode, amount: activeAmount })
+  );
+}
+
+// ===== API取得 =====
+
+async function fetchRates() {
+  const res = await fetch(API_URL);
+  if (!res.ok) {
+    throw new Error("為替レートAPIの取得に失敗しました (status: " + res.status + ")");
+  }
+  const data = await res.json();
+  if (!data || !data.rates) {
+    throw new Error("為替レートAPIのレスポンス形式が不正です");
+  }
+  return {
+    timestamp: data.timestamp,
+    base: data.base,
+    rates: data.rates,
+    fetchedDate: todayStr(),
+  };
+}
+
+function showSplashError(message) {
+  splashSubtext.textContent = message;
+  let retryBtn = document.getElementById("splashRetryButton");
+  if (!retryBtn) {
+    retryBtn = document.createElement("button");
+    retryBtn.id = "splashRetryButton";
+    retryBtn.className = "retry-button";
+    retryBtn.textContent = "再試行";
+    retryBtn.addEventListener("click", () => {
+      splashSubtext.textContent = "為替データの取得中です";
+      retryBtn.remove();
+      init();
+    });
+    splashView.appendChild(retryBtn);
+  }
+}
+
+async function init() {
+  const cached = getStoredRates();
+  if (cached && cached.fetchedDate === todayStr()) {
+    ratesData = cached;
+    startApp();
+    return;
+  }
+  try {
+    const fresh = await fetchRates();
+    ratesData = fresh;
+    saveRates(fresh);
+    startApp();
+  } catch (e) {
+    // エラー時はメイン画面へ遷移せず、エラーメッセージを表示する
+    if (cached) {
+      // 取得済みの古いデータがあればそれを使って起動する(オフライン対応の妥協策)
+      ratesData = cached;
+      startApp();
+      showToast("最新レートの取得に失敗しました。前回取得分を表示しています");
+    } else {
+      showSplashError("為替レートの取得に失敗しました。通信環境をご確認のうえ再試行してください。");
+    }
+  }
+}
+
+function startApp() {
+  loadHomeListAndActiveState();
+  splashView.classList.add("hidden");
+  mainView.classList.remove("hidden");
+  rateTimestampEl.textContent = "レート基準時刻：" + formatTimestampJST(ratesData.timestamp);
+  renderMainList();
+}
+
+// ===== メイン画面描画 =====
+
+function flagUrl(code) {
+  const master = CURRENCY_MAP.get(code);
+  const iso2 = master ? master.iso2 : null;
+  if (!iso2) return null;
+  return `https://flagcdn.com/w80/${iso2}.png`;
+}
+
+function renderMainList() {
+  currencyListEl.innerHTML = "";
+  homeList.forEach((code) => {
+    currencyListEl.appendChild(buildCurrencyRow(code));
+  });
+}
+
+function buildCurrencyRow(code) {
+  const master = CURRENCY_MAP.get(code) || { nameJa: code, nameEn: code };
+  const li = document.createElement("li");
+  li.className = "currency-row";
+  li.dataset.code = code;
+
+  const marker = document.createElement("span");
+  marker.className = "base-marker";
+  marker.textContent = code === BASE_CODE ? "●" : "";
+
+  const flag = document.createElement("img");
+  flag.className = "flag-icon";
+  flag.alt = code;
+  const url = flagUrl(code);
+  if (url) {
+    flag.src = url;
+  }
+  flag.onerror = () => {
+    flag.style.visibility = "hidden";
+  };
+
+  const info = document.createElement("div");
+  info.className = "currency-info";
+  const nameEl = document.createElement("div");
+  nameEl.className = "currency-name";
+  nameEl.textContent = master.nameJa;
+  const codeEl = document.createElement("div");
+  codeEl.className = "currency-code";
+  codeEl.textContent = code;
+  info.appendChild(nameEl);
+  info.appendChild(codeEl);
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.inputMode = "decimal";
+  input.className = "amount-input";
+  input.value = formatAmount(convertedValue(code), code);
+
+  input.addEventListener("focus", () => {
+    activeCode = code;
+    input.value = String(convertedValue(code));
+    input.select();
+  });
+
+  input.addEventListener("input", () => {
+    activeAmount = parseAmount(input.value);
+    updateOtherRowsLive(code);
+  });
+
+  input.addEventListener("blur", () => {
+    confirmActiveInput(code);
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      input.blur();
+    }
+  });
+
+  li.appendChild(marker);
+  li.appendChild(flag);
+  li.appendChild(info);
+  li.appendChild(input);
+
+  if (code !== BASE_CODE) {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-button";
+    deleteBtn.setAttribute("aria-label", "削除");
+    deleteBtn.textContent = "－";
+    deleteBtn.addEventListener("click", () => {
+      removeCurrency(code);
+    });
+    li.appendChild(deleteBtn);
+  }
+
+  return li;
+}
+
+// アクティブ行の入力中、他の行の表示だけをその場で更新する(DOM再構築なし)
+function updateOtherRowsLive(activeRowCode) {
+  const rows = currencyListEl.querySelectorAll(".currency-row");
+  rows.forEach((row) => {
+    const code = row.dataset.code;
+    if (code === activeRowCode) return;
+    const input = row.querySelector(".amount-input");
+    if (input) {
+      input.value = formatAmount(convertedValue(code), code);
+    }
+  });
+}
+
+// 入力確定(blur/Enter)時: 該当通貨をリスト先頭へ移動し、状態を保存して再描画する
+function confirmActiveInput(code) {
+  activeCode = code;
+  homeList = [code, ...homeList.filter((c) => c !== code)];
+  persistState();
+  renderMainList();
+}
+
+function removeCurrency(code) {
+  if (code === BASE_CODE) return;
+  const master = CURRENCY_MAP.get(code);
+  homeList = homeList.filter((c) => c !== code);
+  if (activeCode === code) {
+    activeCode = homeList[0];
+    activeAmount = DEFAULT_AMOUNT;
+  }
+  persistState();
+  renderMainList();
+  showToast(`${master ? master.nameJa : code} を削除しました`);
+}
+
+// ===== 検索/追加画面 =====
+
+function openSearchView() {
+  searchInputEl.value = "";
+  renderSearchResults("");
+  searchView.classList.remove("hidden");
+  mainView.classList.add("hidden");
+  window.setTimeout(() => searchInputEl.focus(), 50);
+}
+
+function closeSearchView() {
+  searchView.classList.add("hidden");
+  mainView.classList.remove("hidden");
+  renderMainList();
+}
+
+function renderSearchResults(query) {
+  const q = query.trim().toLowerCase();
+  searchResultsEl.innerHTML = "";
+
+  const candidates = CURRENCIES.filter((c) => !homeList.includes(c.code));
+  const filtered = q
+    ? candidates.filter(
+        (c) =>
+          c.code.toLowerCase().includes(q) ||
+          c.nameJa.toLowerCase().includes(q) ||
+          c.nameEn.toLowerCase().includes(q)
+      )
+    : candidates;
+
+  if (filtered.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "search-empty";
+    empty.textContent = "該当する通貨が見つかりません";
+    searchResultsEl.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach((c) => {
+    const li = document.createElement("li");
+    li.className = "search-result-row";
+
+    const flag = document.createElement("img");
+    flag.className = "flag-icon";
+    flag.alt = c.code;
+    const url = flagUrl(c.code);
+    if (url) flag.src = url;
+    flag.onerror = () => {
+      flag.style.visibility = "hidden";
+    };
+
+    const info = document.createElement("div");
+    info.className = "currency-info";
+    const nameEl = document.createElement("div");
+    nameEl.className = "currency-name";
+    nameEl.textContent = c.nameJa;
+    const codeEl = document.createElement("div");
+    codeEl.className = "currency-code";
+    codeEl.textContent = `${c.code} ・ ${c.nameEn}`;
+    info.appendChild(nameEl);
+    info.appendChild(codeEl);
+
+    const addBtn = document.createElement("button");
+    addBtn.className = "add-row-button";
+    addBtn.setAttribute("aria-label", "追加");
+    addBtn.textContent = "＋";
+    addBtn.addEventListener("click", () => {
+      addCurrency(c.code);
+    });
+
+    li.appendChild(flag);
+    li.appendChild(info);
+    li.appendChild(addBtn);
+    searchResultsEl.appendChild(li);
+  });
+}
+
+function addCurrency(code) {
+  if (homeList.includes(code)) return;
+  homeList.push(code);
+  persistState();
+  const master = CURRENCY_MAP.get(code);
+  showToast(`${master ? master.nameJa : code} を追加しました`);
+  renderSearchResults(searchInputEl.value);
+}
+
+// ===== イベント登録 =====
+
+addButton.addEventListener("click", openSearchView);
+closeSearchButton.addEventListener("click", closeSearchView);
+searchInputEl.addEventListener("input", () => {
+  renderSearchResults(searchInputEl.value);
+});
+
+// ===== 起動 =====
+init();

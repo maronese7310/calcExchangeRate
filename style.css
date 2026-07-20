@@ -1,0 +1,338 @@
+:root {
+  --color-bg: #f7f6f2;
+  --color-navy: #16213e;
+  --color-navy-soft: #2a3a63;
+  --color-gold: #c8912b;
+  --color-gold-soft: #e8c789;
+  --color-card: #ffffff;
+  --color-border: #e7e4db;
+  --color-text-main: #16213e;
+  --color-text-sub: #7d7a70;
+  --color-danger: #b3452f;
+  --radius: 12px;
+  --button-size: 50px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== 起動画面(Splash) ===== */
+.splash-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: linear-gradient(160deg, var(--color-navy) 0%, #0d1326 100%);
+  color: #fff;
+  padding: 24px;
+  text-align: center;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: var(--color-gold);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.splash-text {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.splash-subtext {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.retry-button {
+  margin-top: 8px;
+  padding: 10px 28px;
+  border-radius: var(--radius);
+  background: var(--color-gold);
+  color: var(--color-navy);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ===== 共通ヘッダー ===== */
+.main-header,
+.search-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--safe-top) + 14px) 20px 4px;
+}
+
+.page-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--color-navy);
+}
+
+.icon-button {
+  width: var(--button-size);
+  height: var(--button-size);
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-button:active {
+  opacity: 0.8;
+}
+
+.rate-timestamp {
+  padding: 0 20px 10px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-sub);
+}
+
+/* ===== メイン画面: 通貨リスト ===== */
+.currency-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 16px calc(var(--safe-bottom) + 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.currency-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.base-marker {
+  width: 10px;
+  flex-shrink: 0;
+  color: var(--color-gold);
+  font-size: 10px;
+  text-align: center;
+}
+
+.flag-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-border);
+}
+
+.currency-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.currency-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.currency-code {
+  font-size: 12px;
+  color: var(--color-text-sub);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amount-input {
+  width: 118px;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--color-navy);
+  padding: 4px 0;
+}
+
+.amount-input:focus {
+  outline: none;
+  color: var(--color-gold);
+}
+
+.delete-button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-danger);
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.delete-button:active {
+  background: var(--color-border);
+}
+
+/* ===== 検索/追加画面 ===== */
+.search-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: calc(var(--safe-top) + 14px);
+}
+
+.search-input {
+  flex: 1;
+  height: 42px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  background: var(--color-card);
+  padding: 0 14px;
+  font-size: 15px;
+  color: var(--color-text-main);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-gold-soft);
+}
+
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.search-result-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.add-row-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.add-row-button:active {
+  opacity: 0.8;
+}
+
+.search-empty {
+  list-style: none;
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-text-sub);
+  font-size: 15px;
+}
+
+/* ===== トースト ===== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--safe-bottom) + 28px);
+  transform: translate(-50%, 12px);
+  background: rgba(22, 33, 62, 0.94);
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  max-width: 86%;
+  text-align: center;
+  z-index: 999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* iPhoneサイズを想定した最大幅制限(タブレット等での表示崩れ防止) */
+.view {
+  max-width: 480px;
+  margin: 0 auto;
+}
