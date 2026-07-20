@@ -28,6 +28,18 @@ const closeSearchButton = document.getElementById("closeSearchButton");
 const toastEl = document.getElementById("toast");
 const toastMessageEl = document.getElementById("toastMessage");
 
+// ===== 数字入力欄の幅を内容に合わせて可変にするためのミラー要素 =====
+const amountMirror = document.createElement("span");
+amountMirror.className = "amount-mirror";
+document.body.appendChild(amountMirror);
+
+// 入力欄の幅を表示中の文字列の実測幅に合わせる(下罫線が数字部分だけにつくようにするため)
+function sizeAmountInput(input) {
+  amountMirror.textContent = input.value || "0";
+  const width = amountMirror.getBoundingClientRect().width;
+  input.style.width = Math.ceil(width) + 4 + "px";
+}
+
 // ===== ユーティリティ =====
 
 // デバイスのローカル日付を "YYYY-MM-DD" 形式で返す
@@ -245,7 +257,7 @@ const TRASH_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColo
   <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
 </svg>`;
 
-const SWIPE_OPEN_OFFSET = -72;
+const SWIPE_OPEN_OFFSET = -78;
 
 function buildCurrencyRow(code) {
   const master = CURRENCY_MAP.get(code) || { nameJa: code, nameEn: code };
@@ -301,15 +313,18 @@ function buildCurrencyRow(code) {
   input.inputMode = "decimal";
   input.className = "amount-input";
   input.value = formatAmount(convertedValue(code), code);
+  sizeAmountInput(input);
 
   input.addEventListener("focus", () => {
     activeCode = code;
     input.value = String(convertedValue(code));
+    sizeAmountInput(input);
     input.select();
   });
 
   input.addEventListener("input", () => {
     activeAmount = parseAmount(input.value);
+    sizeAmountInput(input);
     updateOtherRowsLive(code);
   });
 
@@ -428,6 +443,7 @@ function updateOtherRowsLive(activeRowCode) {
     const input = row.querySelector(".amount-input");
     if (input) {
       input.value = formatAmount(convertedValue(code), code);
+      sizeAmountInput(input);
     }
   });
 }
@@ -511,7 +527,7 @@ function renderSearchResults(query) {
     nameEl.textContent = c.nameJa;
     const codeEl = document.createElement("div");
     codeEl.className = "currency-code";
-    codeEl.textContent = `${c.code} ・ ${c.nameEn}`;
+    codeEl.textContent = `${c.code} (${c.nameEn})`;
     info.appendChild(nameEl);
     info.appendChild(codeEl);
 

@@ -30,9 +30,8 @@
   <!-- 通貨検索/追加画面 -->
   <div id="searchView" class="view search-view hidden">
     <header class="search-header">
-      <button id="closeSearchButton" class="icon-button" aria-label="閉じる">×</button>
       <div class="search-input-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="7"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
@@ -45,6 +44,7 @@
           autocorrect="off"
           autocapitalize="off"
         />
+        <button id="closeSearchButton" class="search-clear-button" aria-label="閉じる">×</button>
       </div>
     </header>
     <ul id="searchResults" class="currency-list search-results"></ul>
