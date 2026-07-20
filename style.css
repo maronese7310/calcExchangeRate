@@ -122,14 +122,13 @@ input {
 .header-titles {
   display: flex;
   flex-direction: column;
-  gap: 2px;
   min-width: 0;
 }
 
 .page-title {
   font-size: 34px;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1;
   letter-spacing: -0.02em;
   margin: 0;
   color: var(--color-text-main);
@@ -154,8 +153,8 @@ input {
 }
 
 .rate-timestamp {
-  margin: 0;
-  line-height: 1.2;
+  margin: 4px 0 0;
+  line-height: 1;
   font-size: 13px;
   color: var(--color-text-sub);
 }
@@ -225,21 +224,27 @@ input {
   will-change: transform;
 }
 
-.base-marker {
-  width: 12px;
+/* 国旗を包み、基準通貨バッジを左上に重ねて表示するためのラッパー。
+   フローに余分なスペースを取らせないことで左右パディングを対称に保つ */
+.flag-wrap {
+  position: relative;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.base-marker.filled::before {
-  content: "";
-  display: block;
-  width: 9px;
-  height: 9px;
+.base-badge {
+  display: none;
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--color-green);
+  border: 2px solid var(--color-bg);
+}
+
+.base-badge.filled {
+  display: block;
 }
 
 /* 国旗アイコン: 角丸四角。追加/削除ボタンより一回り小さい0.8倍サイズ */
@@ -260,6 +265,7 @@ input {
 .currency-name {
   font-size: 18px;
   font-weight: 600;
+  line-height: 1;
   color: var(--color-text-main);
   white-space: nowrap;
   overflow: hidden;
@@ -268,8 +274,9 @@ input {
 
 .currency-code {
   font-size: 14px;
+  line-height: 1;
   color: var(--color-text-sub);
-  margin-top: 2px;
+  margin-top: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

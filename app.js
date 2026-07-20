@@ -284,8 +284,8 @@ function buildCurrencyRow(code) {
   const content = document.createElement("div");
   content.className = "row-content";
 
-  const marker = document.createElement("span");
-  marker.className = "base-marker" + (code === BASE_CODE ? " filled" : "");
+  const flagWrap = document.createElement("div");
+  flagWrap.className = "flag-wrap";
 
   const flag = document.createElement("img");
   flag.className = "flag-icon";
@@ -297,6 +297,12 @@ function buildCurrencyRow(code) {
   flag.onerror = () => {
     flag.style.visibility = "hidden";
   };
+
+  const badge = document.createElement("span");
+  badge.className = "base-badge" + (code === BASE_CODE ? " filled" : "");
+
+  flagWrap.appendChild(flag);
+  flagWrap.appendChild(badge);
 
   const info = document.createElement("div");
   info.className = "currency-info";
@@ -339,8 +345,7 @@ function buildCurrencyRow(code) {
     }
   });
 
-  content.appendChild(marker);
-  content.appendChild(flag);
+  content.appendChild(flagWrap);
   content.appendChild(info);
   content.appendChild(input);
   li.appendChild(content);
