@@ -106,7 +106,7 @@ input {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: calc(var(--safe-top) + 14px) 20px 0;
+  padding: calc(var(--safe-top) + 14px) 20px 14px;
   gap: 12px;
 }
 
@@ -114,9 +114,16 @@ input {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  /* 検索窓は一覧よりも少し内側に余白を取り、インデントを付ける */
-  padding: calc(var(--safe-top) + 14px) 24px 0;
+  padding: calc(var(--safe-top) + 14px) 20px 0;
   gap: 12px;
+}
+
+/* タイトルと基準時刻を1ブロックにまとめ、追加ボタンの高さに余白が引っ張られないようにする */
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .page-title {
@@ -147,8 +154,7 @@ input {
 }
 
 .rate-timestamp {
-  padding: 0 20px 10px;
-  margin: 2px 0 0;
+  margin: 0;
   line-height: 1.2;
   font-size: 13px;
   color: var(--color-text-sub);
@@ -363,9 +369,14 @@ input {
   opacity: 0.7;
 }
 
+/* 一覧(国旗・＋－ボタン)は検索窓よりも少し内側にインデントし、
+   検索窓との縦の間隔も行間(4px)より広めに取る */
 .search-results {
   flex: 1;
   overflow-y: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+  padding-top: 32px;
 }
 
 .search-result-row {

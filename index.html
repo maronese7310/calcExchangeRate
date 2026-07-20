@@ -20,10 +20,12 @@
   <!-- メイン画面 -->
   <div id="mainView" class="view main-view hidden">
     <header class="main-header">
-      <h1 class="page-title">本日のレート</h1>
+      <div class="header-titles">
+        <h1 class="page-title">本日のレート</h1>
+        <p class="rate-timestamp" id="rateTimestamp"></p>
+      </div>
       <button id="addButton" class="icon-button" aria-label="通貨を追加">＋</button>
     </header>
-    <p class="rate-timestamp" id="rateTimestamp"></p>
     <ul id="currencyList" class="currency-list"></ul>
   </div>
 
