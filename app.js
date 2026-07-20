@@ -239,7 +239,8 @@ function flagUrl(code) {
   const master = CURRENCY_MAP.get(code);
   const iso2 = master ? master.iso2 : null;
   if (!iso2) return null;
-  return `https://flagcdn.com/w80/${iso2}.png`;
+  // SVG(ベクター画像)を使うことで、どのサイズで表示しても輪郭が荒くならないようにする
+  return `https://flagcdn.com/${iso2}.svg`;
 }
 
 function renderMainList() {
@@ -489,7 +490,8 @@ function renderSearchResults(query) {
   const q = query.trim().toLowerCase();
   searchResultsEl.innerHTML = "";
 
-  const candidates = CURRENCIES.filter((c) => !homeList.includes(c.code));
+  // JPYは常時登録・削除不可のため候補から除外し、それ以外は常に一覧に残す
+  const candidates = CURRENCIES.filter((c) => c.code !== BASE_CODE);
   const filtered = q
     ? candidates.filter(
         (c) =>
@@ -531,17 +533,23 @@ function renderSearchResults(query) {
     info.appendChild(nameEl);
     info.appendChild(codeEl);
 
-    const addBtn = document.createElement("button");
-    addBtn.className = "add-row-button";
-    addBtn.setAttribute("aria-label", "追加");
-    addBtn.textContent = "＋";
-    addBtn.addEventListener("click", () => {
-      addCurrency(c.code);
+    const inHome = homeList.includes(c.code);
+    const toggleBtn = document.createElement("button");
+    toggleBtn.className = "toggle-row-button " + (inHome ? "remove" : "add");
+    toggleBtn.setAttribute("aria-label", inHome ? "削除" : "追加");
+    toggleBtn.textContent = inHome ? "－" : "＋";
+    toggleBtn.addEventListener("click", () => {
+      if (inHome) {
+        removeCurrency(c.code);
+      } else {
+        addCurrency(c.code);
+      }
+      renderSearchResults(searchInputEl.value);
     });
 
     li.appendChild(flag);
     li.appendChild(info);
-    li.appendChild(addBtn);
+    li.appendChild(toggleBtn);
     searchResultsEl.appendChild(li);
   });
 }
@@ -552,7 +560,6 @@ function addCurrency(code) {
   persistState();
   const master = CURRENCY_MAP.get(code);
   showToast(`${master ? master.nameJa : code} を追加しました`, "success");
-  renderSearchResults(searchInputEl.value);
 }
 
 // ===== イベント登録 =====
