@@ -359,10 +359,10 @@ function buildCurrencyRow(code) {
   dragHandle.setAttribute("aria-label", "並び替え");
   dragHandle.innerHTML = DRAG_HANDLE_SVG;
 
+  content.appendChild(dragHandle);
   content.appendChild(flagWrap);
   content.appendChild(info);
   content.appendChild(input);
-  content.appendChild(dragHandle);
   li.appendChild(content);
 
   if (code !== BASE_CODE) {

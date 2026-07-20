@@ -234,7 +234,7 @@ input {
   display: none;
   position: absolute;
   top: 50%;
-  left: -22px;
+  left: -10px;
   transform: translateY(-50%);
   width: 8px;
   height: 8px;
