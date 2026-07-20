@@ -1,15 +1,14 @@
 :root {
-  --color-bg: #f7f6f2;
-  --color-navy: #16213e;
-  --color-navy-soft: #2a3a63;
-  --color-gold: #c8912b;
-  --color-gold-soft: #e8c789;
-  --color-card: #ffffff;
-  --color-border: #e7e4db;
-  --color-text-main: #16213e;
-  --color-text-sub: #7d7a70;
-  --color-danger: #b3452f;
+  --color-bg: #000000;
+  --color-surface: #1c1c1e;
+  --color-surface-2: #2c2c2e;
+  --color-text-main: #ffffff;
+  --color-text-sub: #8e8e93;
+  --color-divider: #3a3a3c;
+  --color-green: #34c759;
+  --color-red: #ff3b30;
   --radius: 12px;
+  --radius-sm: 8px;
   --button-size: 50px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -36,6 +35,7 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  color: inherit;
 }
 
 input {
@@ -54,7 +54,7 @@ input {
   align-items: center;
   justify-content: center;
   gap: 16px;
-  background: linear-gradient(160deg, var(--color-navy) 0%, #0d1326 100%);
+  background: var(--color-bg);
   color: #fff;
   padding: 24px;
   text-align: center;
@@ -64,8 +64,8 @@ input {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.25);
-  border-top-color: var(--color-gold);
+  border: 3px solid var(--color-surface-2);
+  border-top-color: var(--color-text-main);
   animation: spin 0.9s linear infinite;
 }
 
@@ -79,11 +79,12 @@ input {
   font-size: 20px;
   font-weight: 600;
   margin: 0;
+  color: var(--color-text-main);
 }
 
 .splash-subtext {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-text-sub);
   margin: 0;
   max-width: 280px;
   line-height: 1.5;
@@ -93,8 +94,8 @@ input {
   margin-top: 8px;
   padding: 10px 28px;
   border-radius: var(--radius);
-  background: var(--color-gold);
-  color: var(--color-navy);
+  background: var(--color-surface);
+  color: var(--color-text-main);
   font-size: 15px;
   font-weight: 700;
 }
@@ -106,6 +107,7 @@ input {
   align-items: center;
   justify-content: space-between;
   padding: calc(var(--safe-top) + 14px) 20px 4px;
+  gap: 12px;
 }
 
 .page-title {
@@ -113,15 +115,16 @@ input {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
-  color: var(--color-navy);
+  color: var(--color-text-main);
 }
 
+/* 角丸四角のアイコンボタン(追加ボタン・閉じるボタン共通) */
 .icon-button {
   width: var(--button-size);
   height: var(--button-size);
-  border-radius: 50%;
-  background: var(--color-navy);
-  color: #fff;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text-main);
   font-size: 24px;
   display: flex;
   align-items: center;
@@ -130,7 +133,7 @@ input {
 }
 
 .icon-button:active {
-  opacity: 0.8;
+  background: var(--color-surface-2);
 }
 
 .rate-timestamp {
@@ -147,34 +150,83 @@ input {
   padding: 4px 16px calc(var(--safe-bottom) + 24px);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .currency-row {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+/* スワイプで下から現れる削除(ゴミ箱)アクション */
+.row-delete-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button {
+  width: 100%;
+  height: 100%;
+  background: var(--color-red);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius);
+}
+
+.delete-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.delete-button:active {
+  opacity: 0.8;
+}
+
+.row-content {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 12px 14px;
+  padding: 12px 4px;
+  background: var(--color-bg);
+  touch-action: pan-y;
+  will-change: transform;
 }
 
 .base-marker {
-  width: 10px;
+  width: 12px;
   flex-shrink: 0;
-  color: var(--color-gold);
-  font-size: 10px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.flag-icon {
-  width: 32px;
-  height: 32px;
+.base-marker.filled::before {
+  content: "";
+  display: block;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
+  background: var(--color-green);
+}
+
+/* 国旗アイコン: 角丸四角 */
+.flag-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
   object-fit: cover;
   flex-shrink: 0;
-  background: var(--color-border);
+  background: var(--color-surface);
 }
 
 .currency-info {
@@ -200,39 +252,23 @@ input {
   text-overflow: ellipsis;
 }
 
+/* 数字欄: 下罫線を表示 */
 .amount-input {
   width: 118px;
   flex-shrink: 0;
   border: none;
+  border-bottom: 1px solid var(--color-divider);
   background: transparent;
   font-size: 20px;
   font-weight: 700;
   text-align: right;
-  color: var(--color-navy);
-  padding: 4px 0;
+  color: var(--color-text-main);
+  padding: 4px 2px 6px;
 }
 
 .amount-input:focus {
   outline: none;
-  color: var(--color-gold);
-}
-
-.delete-button {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  color: var(--color-danger);
-  font-size: 15px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.delete-button:active {
-  background: var(--color-border);
+  border-bottom-color: var(--color-text-main);
 }
 
 /* ===== 検索/追加画面 ===== */
@@ -250,20 +286,39 @@ input {
   padding-top: calc(var(--safe-top) + 14px);
 }
 
-.search-input {
+.search-input-wrap {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   height: 42px;
   border-radius: var(--radius);
-  border: 1px solid var(--color-border);
-  background: var(--color-card);
+  background: var(--color-surface);
   padding: 0 14px;
+}
+
+.search-input-wrap svg {
+  width: 17px;
+  height: 17px;
+  color: var(--color-text-sub);
+  flex-shrink: 0;
+}
+
+.search-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
   font-size: 15px;
   color: var(--color-text-main);
 }
 
+.search-input::placeholder {
+  color: var(--color-text-sub);
+}
+
 .search-input:focus {
   outline: none;
-  border-color: var(--color-gold-soft);
 }
 
 .search-results {
@@ -275,18 +330,20 @@ input {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
+  padding: 12px 4px;
   border-radius: var(--radius);
-  padding: 12px 14px;
+}
+
+.search-result-row:active {
+  background: var(--color-surface);
 }
 
 .add-row-button {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  background: var(--color-navy);
-  color: #fff;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-main);
   font-size: 17px;
   font-weight: 700;
   display: flex;
@@ -296,7 +353,7 @@ input {
 }
 
 .add-row-button:active {
-  opacity: 0.8;
+  background: var(--color-surface-2);
 }
 
 .search-empty {
@@ -307,28 +364,54 @@ input {
   font-size: 15px;
 }
 
-/* ===== トースト ===== */
+/* ===== トースト(画面上部・緑丸チェック付き) ===== */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--safe-bottom) + 28px);
-  transform: translate(-50%, 12px);
-  background: rgba(22, 33, 62, 0.94);
+  top: calc(var(--safe-top) + 14px);
+  transform: translate(-50%, -12px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface);
   color: #fff;
   font-size: 14px;
-  padding: 10px 20px;
+  font-weight: 500;
+  padding: 10px 18px 10px 10px;
   border-radius: 999px;
   opacity: 0;
   transition: opacity 0.2s ease, transform 0.2s ease;
   pointer-events: none;
   max-width: 86%;
-  text-align: center;
+  text-align: left;
   z-index: 999;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .toast.show {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+.toast-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.toast-icon svg {
+  width: 13px;
+  height: 13px;
+  color: #fff;
+}
+
+.toast:not(.success) .toast-icon {
+  display: none;
 }
 
 /* iPhoneサイズを想定した最大幅制限(タブレット等での表示崩れ防止) */

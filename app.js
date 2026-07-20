@@ -26,6 +26,7 @@ const rateTimestampEl = document.getElementById("rateTimestamp");
 const addButton = document.getElementById("addButton");
 const closeSearchButton = document.getElementById("closeSearchButton");
 const toastEl = document.getElementById("toast");
+const toastMessageEl = document.getElementById("toastMessage");
 
 // ===== ユーティリティ =====
 
@@ -85,8 +86,10 @@ function convertedValue(code) {
   return activeAmount * (targetRate / baseRate);
 }
 
-function showToast(message) {
-  toastEl.textContent = message;
+// type: "success"(緑丸チェック付き) または "info"(アイコンなし)
+function showToast(message, type = "info") {
+  toastMessageEl.textContent = message;
+  toastEl.classList.toggle("success", type === "success");
   toastEl.classList.remove("hidden");
   toastEl.classList.add("show");
   window.clearTimeout(showToast._timer);
@@ -203,7 +206,7 @@ async function init() {
       // 取得済みの古いデータがあればそれを使って起動する(オフライン対応の妥協策)
       ratesData = cached;
       startApp();
-      showToast("最新レートの取得に失敗しました。前回取得分を表示しています");
+      showToast("最新レートの取得に失敗しました。前回取得分を表示しています", "info");
     } else {
       showSplashError("為替レートの取得に失敗しました。通信環境をご確認のうえ再試行してください。");
     }
@@ -234,15 +237,42 @@ function renderMainList() {
   });
 }
 
+const TRASH_ICON_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"></polyline>
+  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+  <path d="M10 11v6"></path>
+  <path d="M14 11v6"></path>
+  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+</svg>`;
+
+const SWIPE_OPEN_OFFSET = -72;
+
 function buildCurrencyRow(code) {
   const master = CURRENCY_MAP.get(code) || { nameJa: code, nameEn: code };
   const li = document.createElement("li");
   li.className = "currency-row";
   li.dataset.code = code;
 
+  // 左スワイプで現れる削除(ゴミ箱)アクション
+  if (code !== BASE_CODE) {
+    const deleteAction = document.createElement("div");
+    deleteAction.className = "row-delete-action";
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-button";
+    deleteBtn.setAttribute("aria-label", "削除");
+    deleteBtn.innerHTML = TRASH_ICON_SVG;
+    deleteBtn.addEventListener("click", () => {
+      removeCurrency(code);
+    });
+    deleteAction.appendChild(deleteBtn);
+    li.appendChild(deleteAction);
+  }
+
+  const content = document.createElement("div");
+  content.className = "row-content";
+
   const marker = document.createElement("span");
-  marker.className = "base-marker";
-  marker.textContent = code === BASE_CODE ? "●" : "";
+  marker.className = "base-marker" + (code === BASE_CODE ? " filled" : "");
 
   const flag = document.createElement("img");
   flag.className = "flag-icon";
@@ -293,23 +323,100 @@ function buildCurrencyRow(code) {
     }
   });
 
-  li.appendChild(marker);
-  li.appendChild(flag);
-  li.appendChild(info);
-  li.appendChild(input);
+  content.appendChild(marker);
+  content.appendChild(flag);
+  content.appendChild(info);
+  content.appendChild(input);
+  li.appendChild(content);
 
   if (code !== BASE_CODE) {
-    const deleteBtn = document.createElement("button");
-    deleteBtn.className = "delete-button";
-    deleteBtn.setAttribute("aria-label", "削除");
-    deleteBtn.textContent = "－";
-    deleteBtn.addEventListener("click", () => {
-      removeCurrency(code);
-    });
-    li.appendChild(deleteBtn);
+    attachSwipeToDelete(content);
   }
 
   return li;
+}
+
+// 通貨行を左スワイプするとゴミ箱ボタンが現れるようにする(ポインターイベントでタッチ/マウス両対応)
+function attachSwipeToDelete(content) {
+  let startX = 0;
+  let baseX = 0;
+  let currentX = 0;
+  let dragging = false;
+  let moved = false;
+  let wasOpen = false;
+
+  content.addEventListener("pointerdown", (e) => {
+    dragging = true;
+    moved = false;
+    startX = e.clientX;
+    baseX = currentX;
+    wasOpen = currentX === SWIPE_OPEN_OFFSET;
+    content.style.transition = "none";
+    try {
+      content.setPointerCapture(e.pointerId);
+    } catch (err) {
+      /* noop */
+    }
+  });
+
+  content.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    const delta = e.clientX - startX;
+    if (Math.abs(delta) > 4) moved = true;
+    let next = baseX + delta;
+    next = Math.min(0, Math.max(SWIPE_OPEN_OFFSET, next));
+    currentX = next;
+    content.style.transform = `translateX(${next}px)`;
+  });
+
+  function endDrag() {
+    if (!dragging) return;
+    dragging = false;
+    content.style.transition = "transform 0.2s ease";
+
+    let shouldOpen;
+    if (!moved && wasOpen) {
+      // 開いている行を単純タップした場合は閉じる
+      shouldOpen = false;
+    } else if (!moved && !wasOpen) {
+      // 閉じている行を単純タップした場合は何もしない(通常のフォーカス動作に任せる)
+      dragging = false;
+      return;
+    } else {
+      shouldOpen = currentX < SWIPE_OPEN_OFFSET / 2;
+    }
+
+    currentX = shouldOpen ? SWIPE_OPEN_OFFSET : 0;
+    content.style.transform = `translateX(${currentX}px)`;
+    if (shouldOpen) {
+      closeOtherSwipeRows(content);
+    }
+
+    // ドラッグ、または開いた行を閉じる操作の直後は、続くクリック(入力欄フォーカス)を抑止する
+    const suppress = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      content.removeEventListener("click", suppress, true);
+    };
+    content.addEventListener("click", suppress, true);
+  }
+
+  content.addEventListener("pointerup", endDrag);
+  content.addEventListener("pointercancel", endDrag);
+
+  content._closeSwipe = () => {
+    currentX = 0;
+    content.style.transition = "transform 0.2s ease";
+    content.style.transform = "translateX(0)";
+  };
+}
+
+function closeOtherSwipeRows(exceptContent) {
+  currencyListEl.querySelectorAll(".row-content").forEach((el) => {
+    if (el !== exceptContent && el._closeSwipe) {
+      el._closeSwipe();
+    }
+  });
 }
 
 // アクティブ行の入力中、他の行の表示だけをその場で更新する(DOM再構築なし)
@@ -343,7 +450,7 @@ function removeCurrency(code) {
   }
   persistState();
   renderMainList();
-  showToast(`${master ? master.nameJa : code} を削除しました`);
+  showToast(`${master ? master.nameJa : code} を削除しました`, "success");
 }
 
 // ===== 検索/追加画面 =====
@@ -428,7 +535,7 @@ function addCurrency(code) {
   homeList.push(code);
   persistState();
   const master = CURRENCY_MAP.get(code);
-  showToast(`${master ? master.nameJa : code} を追加しました`);
+  showToast(`${master ? master.nameJa : code} を追加しました`, "success");
   renderSearchResults(searchInputEl.value);
 }
 

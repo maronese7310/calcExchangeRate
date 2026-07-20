@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#16213e" />
+  <meta name="theme-color" content="#000000" />
   <title>本日のレート | 為替レート変換</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -31,20 +31,33 @@
   <div id="searchView" class="view search-view hidden">
     <header class="search-header">
       <button id="closeSearchButton" class="icon-button" aria-label="閉じる">×</button>
-      <input
-        type="text"
-        id="searchInput"
-        class="search-input"
-        placeholder="通貨名またはコードで検索"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-      />
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="通貨名またはコード"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+        />
+      </div>
     </header>
     <ul id="searchResults" class="currency-list search-results"></ul>
   </div>
 
-  <div id="toast" class="toast hidden"></div>
+  <div id="toast" class="toast hidden">
+    <span class="toast-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </span>
+    <span id="toastMessage" class="toast-message"></span>
+  </div>
 
   <script src="currencies.js"></script>
   <script src="app.js"></script>
